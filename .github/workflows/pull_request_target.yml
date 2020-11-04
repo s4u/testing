@@ -20,7 +20,7 @@ jobs:
           cat *.txt
           git log --graph --oneline -10
 
-      - run: echo "PR ${{ github.event.number }} base ${{ github.event.base.ref }} branch ${{ github.event.head.label }}"
+      - run: echo "PR ${{ github.event.number }} base ${{ github.event.pull_request.base.ref }} branch ${{ github.event.pull_request.head.label }} repo ${{ github.repository }}"
 
       - name: Test secret
         env:
