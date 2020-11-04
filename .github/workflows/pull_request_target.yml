@@ -15,7 +15,10 @@ jobs:
           ref: 'refs/pull/${{ github.event.number }}/merge'
 
       - name: show files
-        run: ls -l
+        run: |
+          ls -l
+          cat *.txt
+
 
       - name: Test secret
         env:
