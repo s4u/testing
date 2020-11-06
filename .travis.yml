@@ -15,5 +15,5 @@ jobs:
         script:
           - echo "SONARQUBE_SCANNER_PARAMS=$SONARQUBE_SCANNER_PARAMS"
           - mvn help:help
-
+          - env
 
