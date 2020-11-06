@@ -38,7 +38,7 @@
     <distributionManagement>
         <site>
             <id>github-pages</id>
-            <url>${project.scm.url}</url>
+            <url>scm:git:${project.scm.url}</url>
         </site>
     </distributionManagement>
 
