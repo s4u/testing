@@ -29,6 +29,6 @@ jobs:
           git config --global user.email "github-bot@github.com"
           git config --global user.name "GitHub Action"
           echo "+++ git config local +++"
-          git config --local
+          git config --local --list
 
       - run: mvn -ntp site-deploy
