@@ -26,7 +26,9 @@ jobs:
       - uses: s4u/maven-settings-action@v2
 
       - run: |
-          git config user.email "github-bot@github.com"
-          git config user.name "GitHub Action"
+          git config --global user.email "github-bot@github.com"
+          git config --global user.name "GitHub Action"
+          echo "+++ git config local +++"
+          git config --local
 
-      - run: mvn site-deploy
+      - run: mvn -ntp site-deploy
