@@ -20,7 +20,16 @@ jobs:
           cat *.txt
           git log --graph --oneline -10
 
-      - run: echo "PR ${{ github.event.number }} base ${{ github.event.pull_request.base.ref }} branch ${{ github.event.pull_request.head.label }} repo ${{ github.repository }}"
+      - run: echo "params ${SONARQUBE_SCANNER_PARAMS}"
+        env:
+          SONARQUBE_SCANNER_PARAMS: >
+            {
+              "sonar.pullrequest.key": "${{ github.event.number }}",
+              "sonar.pullrequest.base": "${{ github.event.pull_request.base.ref }}",
+              "sonar.pullrequest.branch": "${{ github.event.pull_request.head.repo.full_name }}/${{ github.event.pull_request.head.ref }}",
+              "sonar.pullrequest.github.repository": "${{ github.repository }}",
+              "sonar.login": "${{ secrets.TEST_SECRET }}"
+            }
 
       - name: Test secret
         env:
