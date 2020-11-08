@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://www.simplify4u.org/test/ci-management.html</loc>
+        <loc>https://www.simplify4u.org/testing/ci-management.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/dependencies.html</loc>
+        <loc>https://www.simplify4u.org/testing/dependencies.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/dependency-info.html</loc>
+        <loc>https://www.simplify4u.org/testing/dependency-info.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/distribution-management.html</loc>
+        <loc>https://www.simplify4u.org/testing/distribution-management.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/index.html</loc>
+        <loc>https://www.simplify4u.org/testing/index.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/issue-management.html</loc>
+        <loc>https://www.simplify4u.org/testing/issue-management.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/licenses.html</loc>
+        <loc>https://www.simplify4u.org/testing/licenses.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/plugin-management.html</loc>
+        <loc>https://www.simplify4u.org/testing/plugin-management.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/plugins.html</loc>
+        <loc>https://www.simplify4u.org/testing/plugins.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/project-info.html</loc>
+        <loc>https://www.simplify4u.org/testing/project-info.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/scm.html</loc>
+        <loc>https://www.simplify4u.org/testing/scm.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/summary.html</loc>
+        <loc>https://www.simplify4u.org/testing/summary.html</loc>
     </url>
     <url>
-        <loc>https://www.simplify4u.org/test/team.html</loc>
+        <loc>https://www.simplify4u.org/testing/team.html</loc>
     </url>
 </urlset>
