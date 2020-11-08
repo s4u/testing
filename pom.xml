@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.simplify4u</groupId>
         <artifactId>parent</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2-SNAPSHOT</version>
         <relativePath />
     </parent>
 
@@ -27,9 +27,10 @@
     <artifactId>test</artifactId>
 
     <version>1.0.0-SNAPSHOT</version>
+    <url>https://www.simplify4u.org/${github.repo}</url>
 
     <scm>
-        <connection>scm:git:git@github.com:s4u/testing.git</connection>
+        <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
         <url>https://github.com/s4u/testing</url>
         <tag>HEAD</tag>
@@ -37,10 +38,14 @@
 
     <distributionManagement>
         <site>
-            <id>github-pages</id>
-            <url>scm:git:${project.scm.url}</url>
+            <id>github</id>
+            <url>${project.scm.connection}</url>
         </site>
     </distributionManagement>
+
+    <properties>
+        <github.repo>testing</github.repo>
+    </properties>
 
     <dependencies>
         <dependency>

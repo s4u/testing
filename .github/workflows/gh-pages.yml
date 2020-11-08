@@ -1,12 +1,19 @@
-name: gh-pages
+name: GitHub Pages
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     tags:
       - 'v*'
 
+  pull_request:
+    branches:
+      - 'master'
+
 jobs:
   build:
+    name: Maven site
 
     runs-on: ubuntu-latest
 
@@ -24,9 +31,23 @@ jobs:
           restore-keys: site-maven-
 
       - uses: s4u/maven-settings-action@v2
+        with:
+          sonatypeSnapshots: true
+          properties: |
+            [
+              {"username": "git"},
+              {"password": "${{ secrets.GITHUB_TOKEN }}"},
+              {"scmpublish.pubScmUrl": "scm:git:${{ github.event.repository.url}}"}
+            ]
 
       - run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - run: mvn -ntp site-deploy -Dusername=git -Dpassword=${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy maaven site
+        run: mvn site-deploy -Dscmpublish.dryRun=false
+        if: github.repository_owner == 's4u' && startsWith( github.ref, 'refs/tags/') && github.event_name == 'push'
+
+      - name: Test maven site
+      - run: mvn site
+        if: startsWith( github.ref, 'refs/heads/')
