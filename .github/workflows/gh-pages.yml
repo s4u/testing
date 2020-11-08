@@ -12,8 +12,9 @@ on:
       - 'master'
 
 jobs:
-  build:
-    name: Maven site
+  site-test:
+    name: Maven site - Test
+    if: github.repository_owner != 's4u' || startsWith( github.ref, 'refs/heads/')
 
     runs-on: ubuntu-latest
 
@@ -27,8 +28,33 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
-          key:          site-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: site-maven-
+          key:          maven-site-test-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-site-test-
+
+      - uses: s4u/maven-settings-action@v2
+        with:
+          sonatypeSnapshots: true
+
+      - run: mvn site
+
+  site-deploy:
+    name: Maven site - Deploy
+    if: github.repository_owner == 's4u' && startsWith( github.ref, 'refs/tags/') && github.event_name == 'push'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key:          maven-site-deploy-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-site-deploy-
 
       - uses: s4u/maven-settings-action@v2
         with:
@@ -37,17 +63,12 @@ jobs:
             [
               {"username": "git"},
               {"password": "${{ secrets.GITHUB_TOKEN }}"},
-              {"scmpublish.pubScmUrl": "scm:git:${{ github.event.repository.url}}"}
+              {"scmpublish.pubScmUrl": "scm:git:${{ github.event.repository.url}}"},
+              {"scmpublish.dryRun": "false"}
             ]
 
       - run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - name: Deploy Maven Site
-        run: mvn site-deploy -Dscmpublish.dryRun=false
-        if: github.repository_owner == 's4u' && startsWith( github.ref, 'refs/tags/') && github.event_name == 'push'
-
-      - name: Test Maven Site
-        run: mvn site
-        if: startsWith( github.ref, 'refs/heads/')
+      - run: mvn site-deploy
