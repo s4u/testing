@@ -6,6 +6,8 @@ on:
   issues:
     types: [opened]
 
+  schedule:
+    - cron: '55 5 * * 5
 
 jobs:
   env-info:
