@@ -2,8 +2,7 @@ name: workflow run
 
 on:
   workflow_run:
-    workflows: ["Pull requests"]
-    branches: [main]
+    workflows: ["pull_request"]
     types:
       - completed
       - requested
