@@ -1,0 +1,25 @@
+name: workflow run
+
+on:
+  workflow_run:
+    workflows: ["Pull requests"]
+    branches: [main]
+    types:
+      - completed
+      - requested
+
+jobs:
+  env-info:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump Env
+        run: env
+        shell: bash
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
