@@ -27,14 +27,14 @@
     <artifactId>test</artifactId>
     <packaging>pom</packaging>
 
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <url>https://www.simplify4u.org/${github.repo}</url>
 
     <scm>
         <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
         <url>https://github.com/s4u/testing</url>
-        <tag>v1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
