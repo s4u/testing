@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - 'dependabot/**'
     tags:
+      - 'v*'
 
   schedule:
     - cron: '55 5 * * 5'
@@ -13,7 +14,9 @@ jobs:
 
   verify:
     name: Build ${{ matrix.os }} jdk${{ matrix.java }}
-    if: startsWith( github.event.head_commit.message , '[maven-release-plugin] prepare release') != true
+    if: |
+      startsWith(github.ref, 'refs/tags/')
+      || !startsWith(github.event.head_commit.message , '[maven-release-plugin] prepare release')
 
     runs-on: ${{ matrix.os }}
 
@@ -55,8 +58,10 @@ jobs:
     name: Build Deploy ubuntu-latest jdk8
     if: >
       github.repository_owner == 's4u'
-      && !startsWith( github.event.head_commit.message , '[maven-release-plugin] prepare release')
-      && github.ref == 'refs/heads/master'
+      && (
+        startsWith(github.ref, 'refs/tags/')
+        || ( github.ref == 'refs/heads/master' && !startsWith(github.event.head_commit.message , '[maven-release-plugin] prepare release') )
+      )
 
     needs: verify
 
