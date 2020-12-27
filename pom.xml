@@ -27,14 +27,14 @@
     <artifactId>test</artifactId>
     <packaging>pom</packaging>
 
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <url>https://www.simplify4u.org/${github.repo}</url>
 
     <scm>
         <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
         <url>https://github.com/s4u/testing</url>
-        <tag>HEAD</tag>
+        <tag>v1.0.2</tag>
     </scm>
 
     <distributionManagement>
@@ -46,7 +46,7 @@
 
     <properties>
         <github.repo>testing</github.repo>
-        <project.build.outputTimestamp>2020-12-27T09:57:14Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2020-12-27T14:37:00Z</project.build.outputTimestamp>
     </properties>
 
 
