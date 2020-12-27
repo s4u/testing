@@ -25,6 +25,10 @@ jobs:
   update_release_draft:
     name: Update Release Draft
     runs-on: ubuntu-latest
+    if: >
+      github.repository_owner == 's4u'
+      && (startsWith(github.ref, 'refs/tags/') || !startsWith(github.event.head_commit.message , '[maven-release-plugin]'))
+
     steps:
       - id: is-tag
         run: |
