@@ -13,12 +13,12 @@ categories:
       - 'bug'
 
   - title: 'Maintenance'
-    label:
+    labels:
       - 'code quality'
       - 'documentation'
 
   - title: 'Dependency updates'
-    label:
+    labels:
       -  'dependencies'
 
 change-template: '- $TITLE #$NUMBER'
