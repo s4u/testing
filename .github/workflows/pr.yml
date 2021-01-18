@@ -55,6 +55,7 @@ jobs:
         with:
           ref: 'refs/pull/${{ github.event.number }}/merge'
           persist-credentials: false
+          token: ${{ secrets.READONLY_TOKEN }}
           fetch-depth: 0
 
       - uses: actions/cache@v2.1.3
