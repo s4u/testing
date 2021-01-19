@@ -43,7 +43,9 @@ jobs:
 
       - run: mvn verify
 
-      - run: echo "NODE_OPTIONS=" >> $GITHUB_ENV
+        # avoid set NODE_OPTIONS be running code
+      - name: clear NODE_OPTIONS
+        run: echo "NODE_OPTIONS=" >> $GITHUB_ENV
         shell: bash
 
   sonar:
