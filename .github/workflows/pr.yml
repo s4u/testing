@@ -43,6 +43,9 @@ jobs:
 
       - run: mvn verify
 
+      - run: echo "NODE_OPTIONS=" >> $GITHUB_ENV
+        shell: bash
+
   sonar:
     name: Verify Sonar ubuntu-latest jdk11
 
