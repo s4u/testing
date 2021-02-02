@@ -11,7 +11,7 @@ on:
 jobs:
 
   test1:
-    name: Build ${{ matrix.os }} with sleep ${{ matrix.sleep }}
+    name: Without output ${{ matrix.os }} sleep ${{ matrix.sleep }}
 
     runs-on: ${{ matrix.os }}
 
@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
-        sleep: [60, 120, 300]
+        sleep: [120, 300, 600, 900]
 
     steps:
       - run: sleep ${{ matrix.sleep }}
@@ -28,7 +28,7 @@ jobs:
       - run: echo "sleep finish"
 
   test2:
-    name: Build ${{ matrix.os }} with sleep ${{ matrix.sleep }}
+    name: With output ${{ matrix.os }} sleep ${{ matrix.sleep }}
 
     runs-on: ${{ matrix.os }}
 
@@ -36,12 +36,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
-        sleep: [60, 120, 300]
+        sleep: [120, 300, 600, 900]
 
     steps:
-      - run:  while sleep 60; do echo "=====[ $SECONDS seconds elapsed -- still running ]====="; done &
 
-      - run: sleep ${{ matrix.sleep }}
+      - run: |
+          while sleep 60; do echo "=====[ $SECONDS seconds elapsed -- still running ]====="; done &
+          sleep ${{ matrix.sleep }}
         shell: bash
 
       - run: echo "sleep finish"
