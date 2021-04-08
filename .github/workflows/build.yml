@@ -89,7 +89,7 @@ jobs:
         with:
           sonatypeSnapshots: true
 
-      - run: mvn --errors --show-version site§
+      - run: mvn --errors --show-version site
 
   deploy:
     name: Build Deploy ubuntu-latest jdk8
