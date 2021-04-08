@@ -49,6 +49,8 @@
         <github.repo>testing</github.repo>
         <project.build.outputTimestamp>2020-12-27T14:56:03Z</project.build.outputTimestamp>
         <oss.auto.release>false</oss.auto.release>
+        <maven.site.skip>true</maven.site.skip>
+        <scmpublish.skipDeploy>true</scmpublish.skipDeploy>
     </properties>
 
 
