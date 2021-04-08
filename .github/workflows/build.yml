@@ -50,7 +50,7 @@ jobs:
 
       - run: mvn verify
 
-      - run: mvn sonar:sonar
+      - run: mvn sonar:sonar -Dsonar.branch.name=${GITHUB_REF#refs/heads/}
         if: >
           matrix.os == 'ubuntu-latest'
           && matrix.java == '11'
