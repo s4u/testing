@@ -168,8 +168,8 @@ jobs:
 
       - run: mvn --errors --show-version site-deploy
 
-  publish-release:
-    name: Publish Release
+  github-release:
+    name: Prepare Release
     if: github.repository_owner == 's4u' && startsWith(github.ref, 'refs/tags/')
 
     needs: site-deploy
@@ -181,7 +181,7 @@ jobs:
 
       - uses: release-drafter/release-drafter@v5.15.0
         with:
-          publish: true
+          publish: false
           name: ${{ steps.tag.outputs.name }}
           tag: ${{ steps.tag.outputs.name }}
         env:
