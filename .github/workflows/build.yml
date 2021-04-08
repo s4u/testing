@@ -50,7 +50,7 @@ jobs:
 
       - run: mvn verify
 
-      - run: mvn sonar:sonar -Dsonar.branch.name=${GITHUB_REF#refs/heads/}
+      - run: mvn --errors --show-version sonar:sonar -Dsonar.branch.name=${GITHUB_REF#refs/heads/}
         if: >
           matrix.os == 'ubuntu-latest'
           && matrix.java == '11'
@@ -86,7 +86,7 @@ jobs:
         with:
           sonatypeSnapshots: true
 
-      - run: mvn --no-transfer-progress site
+      - run: mvn --errors --show-version --no-transfer-progress site
 
   deploy:
     name: Build Deploy ubuntu-latest jdk8
@@ -120,7 +120,7 @@ jobs:
           sonatypeSnapshots: true
           servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
 
-      - run: mvn deploy -Dmaven.test.skip=true
+      - run: mvn --errors --show-version deploy -Dmaven.test.skip=true
         env:
           OSS_USER: ${{ secrets.OSS_USER }}
           OSS_PASS: ${{ secrets.OSS_PASS }}
@@ -163,4 +163,4 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - run: mvn --no-transfer-progress site-deploy
+      - run: mvn --errors --show-version --no-transfer-progress site-deploy
