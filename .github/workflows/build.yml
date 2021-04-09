@@ -62,7 +62,6 @@ jobs:
         env:
           SONARQUBE_SCANNER_PARAMS: '{"sonar.login": "2de0e32b2b3108965f76a4713ba2028978c233ed"}'
 
-
   site-test:
     name: Maven Site - Test
     if: |
@@ -168,8 +167,8 @@ jobs:
 
       - run: mvn --errors --show-version site-deploy
 
-  github-release:
-    name: Prepare Release
+  publish-release:
+    name: Publish Release
     if: github.repository_owner == 's4u' && startsWith(github.ref, 'refs/tags/')
 
     needs: site-deploy
@@ -181,7 +180,7 @@ jobs:
 
       - uses: release-drafter/release-drafter@v5.15.0
         with:
-          publish: false
+          publish: true
           name: ${{ steps.tag.outputs.name }}
           tag: ${{ steps.tag.outputs.name }}
         env:
