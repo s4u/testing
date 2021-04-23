@@ -47,20 +47,20 @@ jobs:
       - uses: s4u/maven-settings-action@v2.4.0
         with:
           sonatypeSnapshots: true
+          properties: '[{"sonar.login": "2de0e32b2b3108965f76a4713ba2028978c233ed"}]'
 
-      - run: mvn --errors --show-version verify
-        env:
-          SIGN_KEY: ${{ secrets.SIGN_KEY }}
-
-
-      - run: mvn --errors --show-version sonar:sonar -Dsonar.branch.name=${GITHUB_REF#refs/heads/}
+      - name: sonar setup
+        id: sonar
+        run: echo "::set-output name=mvnargs::sonar:sonar -P coverage -Dsonar.branch.name=${GITHUB_REF#refs/heads/}"
         if: >
           matrix.os == 'ubuntu-latest'
           && matrix.java == '11'
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
+
+      - run: mvn --errors --show-version verify ${{steps.sonar.outputs.mvnargs}}
         env:
-          SONARQUBE_SCANNER_PARAMS: '{"sonar.login": "2de0e32b2b3108965f76a4713ba2028978c233ed"}'
+          SIGN_KEY: ${{ secrets.SIGN_KEY }}
 
   site-test:
     name: Maven Site - Test
