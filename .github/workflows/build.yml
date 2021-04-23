@@ -13,7 +13,7 @@ on:
 jobs:
 
   setup:
-    name: Setup build
+    name: Setup
     runs-on: ubuntu-latest
 
     if: |
@@ -109,7 +109,7 @@ jobs:
       - run: mvn --errors --show-version site
 
   deploy:
-    name: Build Deploy ubuntu-latest jdk8
+    name: Build - Deploy
     concurrency: maven-deploy
 
     if: github.repository_owner == 's4u'
@@ -144,7 +144,7 @@ jobs:
           SIGN_KEY: ${{ secrets.SIGN_KEY }}
 
   site-deploy:
-    name: Maven Site - Deploy
+    name: Site - Deploy
     concurrency: site-deploy
     if: github.repository_owner == 's4u' && startsWith(github.ref, 'refs/tags/')
 
