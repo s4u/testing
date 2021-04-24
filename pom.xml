@@ -13,27 +13,26 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.simplify4u</groupId>
         <artifactId>parent</artifactId>
         <version>2.11.1</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>org.simplify4u.test</groupId>
     <artifactId>test</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <url>https://www.simplify4u.org/${github.repo}</url>
     <scm>
         <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
         <url>https://github.com/s4u/testing</url>
-        <tag>HEAD</tag>
+        <tag>v1.0.4</tag>
     </scm>
 
     <distributionManagement>
@@ -45,7 +44,7 @@
 
     <properties>
         <github.repo>testing</github.repo>
-        <project.build.outputTimestamp>2020-12-27T14:56:03Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2021-04-24T06:55:27Z</project.build.outputTimestamp>
         <oss.auto.release>false</oss.auto.release>
         <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
     </properties>
