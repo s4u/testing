@@ -1,7 +1,0 @@
-# turn shallow clone off for sonar
-git:
-  depth: false
-
-addons:
-  sonarcloud:
-    organization: $SONAR_ORG
