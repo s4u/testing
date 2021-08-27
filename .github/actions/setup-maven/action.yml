@@ -1,0 +1,24 @@
+name: 'Setup Maven'
+description: 'Setup maven and tools for build'
+
+inputs:
+
+  java-version:
+    description: 'java version to use'
+    required: true
+
+  java-distribution:
+    description: 'java version to use'
+    default: 'temurin'
+    required: true
+
+runs:
+  using: 'composite'
+
+  steps:
+
+    - uses: actions/setup-java@v2.3.0
+      with:
+        java-version: '${{ inputs.java-version }}'
+        distribution: '${{ inputs.java-distribution }}'
+
