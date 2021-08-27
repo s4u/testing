@@ -58,11 +58,8 @@ jobs:
       - uses: ./.github/actions/setup-maven
         with:
           java-version: ${{ matrix.java }}
-
-      - uses: s4u/maven-settings-action@v2.4.1
-        with:
-          sonatypeSnapshots: true
-          properties: |
+          settings-sonatypeSnapshots: true
+          settings-properties: |
             [
               {"sonar.login": "2de0e32b2b3108965f76a4713ba2028978c233ed"},
               {"sonar.branch.name": "${{ needs.setup.outputs.branch }}"}
@@ -77,7 +74,7 @@ jobs:
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
 
-      - run: mvn --errors --show-version verify ${{steps.sonar.outputs.mvn-args}}
+      - run: ./mvnw --errors --show-version verify ${{steps.sonar.outputs.mvn-args}}
         env:
           SIGN_KEY: ${{ secrets.SIGN_KEY }}
 
@@ -99,12 +96,9 @@ jobs:
       - uses: ./.github/actions/setup-maven
         with:
           java-version: 8
+          settings-sonatypeSnapshots: true
 
-      - uses: s4u/maven-settings-action@v2.4.1
-        with:
-          sonatypeSnapshots: true
-
-      - run: mvn --errors --show-version site
+      - run: ./mvnw --errors --show-version site
 
   deploy:
     name: Build - Deploy
@@ -128,13 +122,10 @@ jobs:
       - uses: ./.github/actions/setup-maven
         with:
           java-version: 8
+          settings-sonatypeSnapshots: true
+          settings-servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
 
-      - uses: s4u/maven-settings-action@v2.4.1
-        with:
-          sonatypeSnapshots: true
-          servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
-
-      - run: mvn --errors --show-version deploy -Dmaven.test.skip=true
+      - run: ./mvnw --errors --show-version deploy -Dmaven.test.skip=true
         env:
           OSS_USER: ${{ secrets.OSS_USER }}
           OSS_PASS: ${{ secrets.OSS_PASS }}
@@ -161,11 +152,8 @@ jobs:
       - uses: ./.github/actions/setup-maven
         with:
           java-version: 8
-
-      - uses: s4u/maven-settings-action@v2.4.1
-        with:
-          sonatypeSnapshots: true
-          properties: |
+          settings-sonatypeSnapshots: true
+          settings-properties: |
             [
               {"username": "git"},
               {"password": "${{ secrets.TECH_TOKEN }}"},
@@ -177,7 +165,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - run: mvn --errors --show-version site-deploy
+      - run: ./mvnw --errors --show-version site-deploy
 
   publish-release:
     name: Publish Release

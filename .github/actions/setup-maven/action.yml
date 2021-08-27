@@ -3,6 +3,8 @@ description: 'Setup maven and tools for build'
 
 inputs:
 
+  # java jdk params
+
   java-version:
     description: 'java version to use'
     required: true
@@ -10,15 +12,50 @@ inputs:
   java-distribution:
     description: 'java version to use'
     default: 'temurin'
-    required: true
+    required: false
+
+  # maven settings.xml params
+  settings-servers:
+    description: 'servers definition in json array, eg: [{"id": "serverId", "username": "username", "password": "password"}]'
+    required: false
+
+  settings-mirrors:
+    description: 'mirrors definition in json array, eg: [{"id": "id", "name": "name", "mirrorOf": "mirrorOf", "url": "url"}]'
+    required: false
+
+  settings-properties:
+    description: 'json array with properties, eg [{"propertyName1": "propertyValue1"}, {"propertyName2": "propertyValue2"}]'
+    required: false
+
+  settings-sonatypeSnapshots:
+    description: 'add https://oss.sonatype.org/content/repositories/snapshots to repository list - true or false'
+    required: false
+
+  maven-version:
+    description: 'prpare maven wrapper with specific version'
+    default: 3.8.1
+    required: false
 
 runs:
   using: 'composite'
 
   steps:
 
-    - uses: actions/setup-java@v2.3.0
+    - name: Setup Java
+      uses: actions/setup-java@v2.3.0
       with:
         java-version: '${{ inputs.java-version }}'
         distribution: '${{ inputs.java-distribution }}'
+
+    - name: Prepare Maven settings.xml
+      uses: s4u/maven-settings-action@v2.4.1
+        with:
+          servers: '${{ inputs.settings-servers}}'
+          mirrors: '${{ inputs.settings-mirrors}}'
+          properties: '${{ inputs.settings-properties}}'
+          sonatypeSnapshots: '${{ inputs.settings-sonatypeSnapshots}}'
+
+    - name: Setup Maven Wrapper
+      if: inputs.maven-version != 'skip'
+      run: mvn -V -N io.takari:maven:wrapper -Dmaven=${{ inputs.maven-version }}
 
