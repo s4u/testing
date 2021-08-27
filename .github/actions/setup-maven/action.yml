@@ -6,11 +6,11 @@ inputs:
   # java jdk params
 
   java-version:
-    description: 'java version to use'
+    description: 'The Java version to set up'
     required: true
 
   java-distribution:
-    description: 'java version to use'
+    description: 'Java distribution'
     default: 'temurin'
     required: false
 
@@ -32,7 +32,7 @@ inputs:
     required: false
 
   maven-version:
-    description: 'prpare maven wrapper with specific version'
+    description: 'maven wrapper with specific version'
     default: 3.8.1
     required: false
 
@@ -41,22 +41,31 @@ runs:
 
   steps:
 
-    - name: Setup Java
-      uses: actions/setup-java@v2.3.0
+    - run: echo "::group::Setup Java"
+      shell: bash
+    - uses: actions/setup-java@v2.3.0
       with:
         java-version: '${{ inputs.java-version }}'
         distribution: '${{ inputs.java-distribution }}'
+    - run: echo "::endgroup::"
+      shell: bash
 
-    - name: Prepare Maven settings.xml
-      uses: s4u/maven-settings-action@v2.4.1
+    - run: echo "::group::Prepare Maven settings.xml"
+      shell: bash
+    - uses: s4u/maven-settings-action@v2.4.1
       with:
         servers: '${{ inputs.settings-servers}}'
         mirrors: '${{ inputs.settings-mirrors}}'
         properties: '${{ inputs.settings-properties}}'
         sonatypeSnapshots: '${{ inputs.settings-sonatypeSnapshots}}'
+    - run: echo "::endgroup::"
+      shell: bash
 
-    - name: Setup Maven Wrapper
-      run: |
+    - run: echo "::group::Setup Maven Wrapper"
+      shell: bash
+    - run: |
         [ "${{ inputs.maven-version }}" != "skip" ] && mvn -V -N io.takari:maven:wrapper -Dmaven=${{ inputs.maven-version }}
+      shell: bash
+    - run: echo "::endgroup::"
       shell: bash
 
