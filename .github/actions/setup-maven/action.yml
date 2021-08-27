@@ -49,11 +49,11 @@ runs:
 
     - name: Prepare Maven settings.xml
       uses: s4u/maven-settings-action@v2.4.1
-        with:
-          servers: '${{ inputs.settings-servers}}'
-          mirrors: '${{ inputs.settings-mirrors}}'
-          properties: '${{ inputs.settings-properties}}'
-          sonatypeSnapshots: '${{ inputs.settings-sonatypeSnapshots}}'
+      with:
+        servers: '${{ inputs.settings-servers}}'
+        mirrors: '${{ inputs.settings-mirrors}}'
+        properties: '${{ inputs.settings-properties}}'
+        sonatypeSnapshots: '${{ inputs.settings-sonatypeSnapshots}}'
 
     - name: Setup Maven Wrapper
       if: inputs.maven-version != 'skip'
