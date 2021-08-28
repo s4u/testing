@@ -74,7 +74,7 @@ jobs:
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
 
-      - run: ./mvnw --errors --show-version verify ${{steps.sonar.outputs.mvn-args}}
+      - run: mvn --errors --show-version verify ${{steps.sonar.outputs.mvn-args}}
         env:
           SIGN_KEY: ${{ secrets.SIGN_KEY }}
 
@@ -98,7 +98,7 @@ jobs:
           java-version: 8
           settings-sonatypeSnapshots: true
 
-      - run: ./mvnw --errors --show-version site
+      - run: mvn --errors --show-version site
 
   deploy:
     name: Build - Deploy
@@ -125,7 +125,7 @@ jobs:
           settings-sonatypeSnapshots: true
           settings-servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
 
-      - run: ./mvnw --errors --show-version deploy -Dmaven.test.skip=true
+      - run: mvn --errors --show-version deploy -Dmaven.test.skip=true
         env:
           OSS_USER: ${{ secrets.OSS_USER }}
           OSS_PASS: ${{ secrets.OSS_PASS }}
@@ -165,7 +165,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - run: ./mvnw --errors --show-version site-deploy
+      - run: mvn --errors --show-version site-deploy
 
   publish-release:
     name: Publish Release
