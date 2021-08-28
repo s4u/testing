@@ -12,11 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: alexwilson/enable-github-automerge-action@1.0.0
+      - name: Dependabot metadata
         if: github.actor == 'dependabot[bot]'
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.1.1
         with:
-          merge-method: "REBASE"
-          github-token: "${{ secrets.TECH_TOKEN }}"
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: >
+          github.actor == 'dependabot[bot]'
+          && steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr merge --auto --rebase "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Approve a PR
         if: >
