@@ -86,7 +86,7 @@ jobs:
         with:
           java-version: 8
           settings-sonatypeSnapshots: true
-          cache-prefix: ${{ needs.setup.outputs.date-ym}}-
+          cache-prefix: ${{ needs.setup.outputs.date-ym}}-maven-site-
 
       - run: mvn --errors --show-version site
 
@@ -139,7 +139,7 @@ jobs:
               {"scmpublish.pubScmUrl": "scm:git:${{ github.event.repository.url}}"},
               {"scmpublish.dryRun": "false"}
             ]
-          cache-prefix: ${{ needs.setup.outputs.date-ym}}-
+          cache-prefix: ${{ needs.setup.outputs.date-ym}}-maven-site-
 
 
       - run: |
