@@ -34,7 +34,7 @@ jobs:
           [ -f .github/build.env ] && cat .github/build.env >> $GITHUB_ENV
 
       - name: Set outputs
-      - id: setup
+        id: setup
         run: |
           echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
           echo "::set-output name=date-ym::$(date +%y%m)"
