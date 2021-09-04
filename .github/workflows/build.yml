@@ -24,12 +24,23 @@ jobs:
     outputs:
       branch: ${{ steps.setup.outputs.branch }}
       date-ym: ${{ steps.setup.outputs.date-ym }}
+      maven-matrix: ${{ steps.setup.outputs.date-ym }}
 
     steps:
+      - uses: actions/checkout@v2.3.4
+
+      - name: Read preoject environemnts
+        run: |
+          [ -f ./.github/build.env ] && cat /github/build.env >> $GITHUB_ENV
+
+      - name: Set outputs
       - id: setup
         run: |
           echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
           echo "::set-output name=date-ym::$(date +%y%m)"
+
+          : ${MAVEN_MATRIX:=[\"3.8.1\"]}
+          echo "::set-output name=maven-matrix::${MAVEN_MATRIX}"
 
   verify:
     name: Build ${{ matrix.os }} jdk${{ matrix.java }}
@@ -42,12 +53,14 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
         java: [ 8, 11, 16, 17-ea ]
+        maven: ${{ fromJSON( needs.setup.outputs.maven-matrix ) }}
 
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           checkout-fetch-depth: 0
           java-version: ${{ matrix.java }}
+          maven-version: ${{ matrix.maven }}
           settings-sonatypeSnapshots: true
           settings-properties: |
             [
