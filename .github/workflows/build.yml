@@ -31,7 +31,7 @@ jobs:
 
       - name: Read preoject environemnts
         run: |
-          [ -f ./.github/build.env ] && cat /github/build.env >> $GITHUB_ENV
+          [ -f .github/build.env ] && cat .github/build.env >> $GITHUB_ENV
 
       - name: Set outputs
       - id: setup
