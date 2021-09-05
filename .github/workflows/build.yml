@@ -28,9 +28,8 @@ jobs:
       maven-matrix: ${{ steps.setup.outputs.maven-matrix }}
 
     steps:
-      - uses: actions/checkout@v2.3.4
       - id: setup
-        uses: ./.github/actions/setup
+        uses: s4u/.github/actions/setup@master
 
   verify:
     name: Build ${{ matrix.os.label }} jdk-${{ matrix.java }} mvn-${{ matrix.maven }}
