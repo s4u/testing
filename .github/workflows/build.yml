@@ -43,7 +43,7 @@ jobs:
           echo "::set-output name=maven-matrix::${MAVEN_MATRIX}"
 
   verify:
-    name: Build ${{ matrix.os }} jdk${{ matrix.java }}
+    name: Build ${{ runner.os }} jdk-${{ matrix.java }} mvn-${{ matrix.maven }
     needs: setup
 
     runs-on: ${{ matrix.os }}
@@ -54,6 +54,11 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
         java: [ 8, 11, 16, 17-ea ]
         maven: ${{ fromJSON( needs.setup.outputs.maven-matrix ) }}
+        inclue:
+          - os: ubuntu-latest
+            java: 11
+            maven: ${{ fromJSON( needs.setup.outputs.maven-matrix )[0] }}
+            sonar: true
 
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
@@ -74,8 +79,7 @@ jobs:
         id: sonar
         run: echo "::set-output name=mvn-args::sonar:sonar -P coverage"
         if: >
-          matrix.os == 'ubuntu-latest'
-          && matrix.java == '11'
+          matrix.sonar
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
 
