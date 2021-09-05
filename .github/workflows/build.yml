@@ -43,7 +43,7 @@ jobs:
           echo "::set-output name=maven-matrix::${MAVEN_MATRIX}"
 
   verify:
-    name: Build ${{ matrix.os }} jdk-${{ matrix.java }} mvn-${{ matrix.maven }
+    name: Build ${{ matrix.os }} jdk-${{ matrix.java }} mvn-${{ matrix.maven }}
     needs: setup
 
     runs-on: ${{ matrix.os }}
