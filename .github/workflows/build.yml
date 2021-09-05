@@ -26,6 +26,7 @@ jobs:
       date-ym: ${{ steps.setup.outputs.date-ym }}
       sonar: ${{ steps.setup.outputs.sonar }}
       maven-matrix: ${{ steps.setup.outputs.maven-matrix }}
+      maven-default: ${{ steps.setup.outputs.maven-default }}
 
     steps:
       - id: setup
@@ -89,6 +90,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: 8
+          maven-version: 3.8.1
           settings-sonatypeSnapshots: true
           cache-prefix: ${{ needs.setup.outputs.date-ym}}-maven-site-
 
@@ -108,6 +110,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: 8
+          maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           settings-servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
           cache-prefix: ${{ needs.setup.outputs.date-ym}}-
@@ -131,6 +134,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: 8
+          maven-version: 3.8.1
           settings-sonatypeSnapshots: true
           settings-properties: |
             [
