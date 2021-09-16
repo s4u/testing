@@ -48,7 +48,7 @@ jobs:
             label: Windows
           - name: macOS-latest
             label: macOS
-        java: [ 8, 11, 17, 18-ea ]
+        java: [ 8, 11, 17-ea, 18-ea ]
         maven: ${{ fromJSON( needs.setup.outputs.maven-matrix ) }}
 
     steps:
