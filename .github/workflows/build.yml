@@ -107,7 +107,7 @@ jobs:
 
     if: github.repository_owner == 's4u'
 
-    needs: [ setup, verify, site-test ]
+    needs: [ setup, build, site-test ]
 
     runs-on: ubuntu-latest
 
