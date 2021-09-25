@@ -27,13 +27,15 @@ jobs:
       sonar: ${{ steps.setup.outputs.sonar }}
       maven-matrix: ${{ steps.setup.outputs.maven-matrix }}
       maven-default: ${{ steps.setup.outputs.maven-default }}
+      java-distribution-matrix: ${{ steps.setup.outputs.java-distribution-matrix }}
+      java-matrix: ${{ steps.setup.outputs.java-matrix }}
 
     steps:
       - id: setup
         uses: s4u/.github/actions/setup@master
 
-  verify:
-    name: Build ${{ matrix.os.label }} jdk-${{ matrix.java }} mvn-${{ matrix.maven }}
+  build:
+    name: Build ${{ matrix.os.label }} jdk-${{ matrix.java }}-${{ matrix.java-distribution }} mvn-${{ matrix.maven }}
     needs: setup
 
     runs-on: ${{ matrix.os.name }}
@@ -48,15 +50,17 @@ jobs:
             label: Windows
           - name: macOS-latest
             label: macOS
-        java: [ 8, 11, 17, 18-ea ]
+        java-distribution: ${{ fromJSON( needs.setup.outputs.java-distribution-matrix ) }}
+        java: ${{ fromJSON( needs.setup.outputs.java-matrix ) }}
         maven: ${{ fromJSON( needs.setup.outputs.maven-matrix ) }}
+
 
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           checkout-fetch-depth: 0
           java-version: ${{ matrix.java }}
-          java-distribution: zulu
+          java-distribution: ${{ matrix.java-distribution }}
           maven-version: ${{ matrix.maven }}
           settings-sonatypeSnapshots: true
           settings-properties: |
@@ -93,7 +97,7 @@ jobs:
           java-version: 8
           maven-version: 3.8.1
           settings-sonatypeSnapshots: true
-          cache-prefix: ${{ needs.setup.outputs.date-ym}}-maven-site-
+          cache-prefix: ${{ needs.setup.outputs.date-ym }}-maven-site-
 
       - run: mvn --errors --show-version site
 
