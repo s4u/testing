@@ -23,12 +23,14 @@ jobs:
 
     outputs:
       branch: ${{ steps.setup.outputs.branch }}
+      tag: ${{ steps.setup.outputs.tag }}
       date-ym: ${{ steps.setup.outputs.date-ym }}
       sonar: ${{ steps.setup.outputs.sonar }}
       maven-matrix: ${{ steps.setup.outputs.maven-matrix }}
       maven-default: ${{ steps.setup.outputs.maven-default }}
       java-distribution-matrix: ${{ steps.setup.outputs.java-distribution-matrix }}
       java-matrix: ${{ steps.setup.outputs.java-matrix }}
+      java-default: ${{ steps.setup.outputs.java-default }}
 
     steps:
       - id: setup
@@ -78,6 +80,7 @@ jobs:
           matrix.os.name == 'ubuntu-latest'
           && matrix.java == '11'
           && matrix.maven == fromJSON( needs.setup.outputs.maven-matrix )[0]
+          && matrix.java-distribution = fromJSON( needs.setup.outputs.java-distribution )[0]
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
 
@@ -94,8 +97,8 @@ jobs:
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
-          java-version: 8
-          maven-version: 3.8.1
+          java-version: ${{ needs.setup.outputs.java-default }}
+          maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           cache-prefix: ${{ needs.setup.outputs.date-ym }}-maven-site-
 
@@ -114,7 +117,7 @@ jobs:
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
-          java-version: 8
+          java-version: ${{ needs.setup.outputs.java-default }}
           maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           settings-servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
@@ -138,8 +141,8 @@ jobs:
     steps:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
-          java-version: 8
-          maven-version: 3.8.1
+          java-version: ${{ needs.setup.outputs.java-default }}
+          maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           settings-properties: |
             [
@@ -162,17 +165,14 @@ jobs:
 
     if: github.repository_owner == 's4u' && startsWith(github.ref, 'refs/tags/')
 
-    needs: site-deploy
+    needs: [setup, site-deploy]
     runs-on: ubuntu-latest
 
     steps:
-      - id: tag
-        run: echo "::set-output name=name::${GITHUB_REF#refs/tags/}"
-
       - uses: release-drafter/release-drafter@v5.15.0
         with:
           publish: false
-          name: ${{ steps.tag.outputs.name }}
-          tag: ${{ steps.tag.outputs.name }}
+          name: ${{ needs.setup.outputs.tag }}
+          tag: ${{ needs.setup.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
