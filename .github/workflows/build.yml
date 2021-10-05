@@ -80,7 +80,7 @@ jobs:
           matrix.os.name == 'ubuntu-latest'
           && matrix.java == '11'
           && matrix.maven == fromJSON( needs.setup.outputs.maven-matrix )[0]
-          && matrix.java-distribution = fromJSON( needs.setup.outputs.java-distribution )[0]
+          && matrix.java-distribution == fromJSON( needs.setup.outputs.java-distribution )[0]
           && github.repository_owner == 's4u'
           && startsWith( github.ref, 'refs/heads/')
 
