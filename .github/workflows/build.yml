@@ -29,6 +29,7 @@ jobs:
       maven-matrix: ${{ steps.setup.outputs.maven-matrix }}
       maven-default: ${{ steps.setup.outputs.maven-default }}
       java-distribution-matrix: ${{ steps.setup.outputs.java-distribution-matrix }}
+      java-distribution-default: ${{ steps.setup.outputs.java-distribution-default }}
       java-matrix: ${{ steps.setup.outputs.java-matrix }}
       java-default: ${{ steps.setup.outputs.java-default }}
 
@@ -98,6 +99,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: ${{ needs.setup.outputs.java-default }}
+          java-distribution: ${{ needs.setup.outputs.java-distribution-default }}
           maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           cache-prefix: ${{ needs.setup.outputs.date-ym }}-maven-site-
@@ -118,6 +120,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: ${{ needs.setup.outputs.java-default }}
+          java-distribution: ${{ needs.setup.outputs.java-distribution-default }}
           maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           settings-servers: '[{"id": "ossrh", "username": "${env.OSS_USER}", "password": "${env.OSS_PASS}"}]'
@@ -142,6 +145,7 @@ jobs:
       - uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: ${{ needs.setup.outputs.java-default }}
+          java-distribution: ${{ needs.setup.outputs.java-distribution-default }}
           maven-version: ${{ needs.setup.outputs.maven-default }}
           settings-sonatypeSnapshots: true
           settings-properties: |
