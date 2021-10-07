@@ -13,4 +13,4 @@ on:
 
 jobs:
   build:
-    uses: s4u/.github/workflows/maven-build.yml@master
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
