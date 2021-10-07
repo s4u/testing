@@ -1,4 +1,4 @@
-name: Build
+name: Build Shared
 
 on:
   push:
@@ -13,4 +13,4 @@ on:
 
 jobs:
   build:
-    uses: .github/workflows/maven-build.yml@master
+    uses: s4u/.github/workflows/maven-build.yml@master
