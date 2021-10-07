@@ -1,0 +1,16 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+    tags:
+      - 'v*'
+
+  schedule:
+    - cron: '55 5 * * 5'
+
+jobs:
+  build:
+    uses: .github/workflows/maven-build.yml@master
