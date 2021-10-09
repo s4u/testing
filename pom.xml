@@ -27,6 +27,8 @@
     <artifactId>test</artifactId>
     <version>1.0.6-SNAPSHOT</version>
 
+    <description>Project for testing purpose</description>
+
     <url>https://www.simplify4u.org/${github.repo}</url>
 
     <scm>
@@ -57,5 +59,21 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
