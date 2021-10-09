@@ -28,6 +28,7 @@
     <version>1.0.5-SNAPSHOT</version>
 
     <url>https://www.simplify4u.org/${github.repo}</url>
+
     <scm>
         <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
@@ -46,7 +47,6 @@
         <github.repo>testing</github.repo>
         <project.build.outputTimestamp>2021-04-24T06:55:34Z</project.build.outputTimestamp>
         <oss.auto.release>false</oss.auto.release>
-        <maven-release-plugin.version>3.0.0-M4</maven-release-plugin.version>
     </properties>
 
     <dependencies>
