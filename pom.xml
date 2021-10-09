@@ -25,7 +25,7 @@
 
     <groupId>org.simplify4u.test</groupId>
     <artifactId>test</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
 
     <url>https://www.simplify4u.org/${github.repo}</url>
 
@@ -33,7 +33,7 @@
         <connection>scm:git:git@github.com:s4u/testing</connection>
         <developerConnection>${project.scm.connection}</developerConnection>
         <url>https://github.com/s4u/testing</url>
-        <tag>v1.0.5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -45,7 +45,7 @@
 
     <properties>
         <github.repo>testing</github.repo>
-        <project.build.outputTimestamp>2021-10-09T18:24:44Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2021-10-09T18:24:49Z</project.build.outputTimestamp>
         <oss.auto.release>false</oss.auto.release>
     </properties>
 
