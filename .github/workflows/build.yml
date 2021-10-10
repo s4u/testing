@@ -15,9 +15,6 @@ jobs:
   build:
     name: Build
     uses: s4u/.github/.github/workflows/maven-build.yml@master
-    with:
-      java-matrix:  '["8", "11", "17", "18-ea"]'
-      maven-matrix: '["3.8.3", "3.6.3"]'
 
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
