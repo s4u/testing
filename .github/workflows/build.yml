@@ -15,7 +15,7 @@ jobs:
   test-hash:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ hashFiles(fromJSON('["**/pom.xml", "README.md"]')) }}
+      - run: echo ${{ hashFiles(join(fromJSON('["**/pom.xml", "README.md"]')), '\n') }}
 
 #  build:
 #    name: Build
