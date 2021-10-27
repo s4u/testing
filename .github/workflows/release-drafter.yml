@@ -5,6 +5,7 @@ on:
     branches:
       - 'master'
       - 'main'
+      - 'test_branch'
 
 jobs:
   update_release_draft:
