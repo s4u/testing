@@ -1,4 +1,4 @@
-name: Build
+name: Build - New JDK
 
 on:
   push:
@@ -16,6 +16,10 @@ jobs:
   build:
     name: Build
     uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18-ea", "18"]'
+      java-dist-matrix: '["zulu", "temurin"]'
+
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
       SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
