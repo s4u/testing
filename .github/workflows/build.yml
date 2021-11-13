@@ -12,23 +12,20 @@ on:
     - cron: '55 5 * * 5'
 
 jobs:
-  test-hash:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ hashFiles('**/pom.xml') }}
 
-#  build:
-#    name: Build
-#    uses: s4u/.github/.github/workflows/maven-build.yml@master
-#    with:
-#      java-matrix:  '["8", "11", "17", "18-ea"]'
-#      maven-matrix: '["3.8.3", "3.6.3"]'
-#
-#    secrets:
-#      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
-#      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
-#      OSS_USER:       ${{ secrets.OSS_USER }}
-#      OSS_PASS:       ${{ secrets.OSS_PASS }}
-#      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-#      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+  build:
+    name: Build
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["8", "11", "17", "18-ea", "18"]'
+      java-dist-matrix: '["zulu", "temurin"]'
+      maven-matrix: '["3.8.3", "3.6.3"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
