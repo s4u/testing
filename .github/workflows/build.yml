@@ -12,10 +12,10 @@ on:
     - cron: '55 5 * * 5'
 
 jobs:
-
   build:
     name: Build
     uses: s4u/.github/.github/workflows/maven-build.yml@master
+
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
       SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
