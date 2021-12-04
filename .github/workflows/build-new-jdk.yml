@@ -13,12 +13,12 @@ on:
 
 jobs:
 
-  build:
-    name: Build
+  build-18-zulu:
+    name: 18 zulu
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
-      java-matrix:  '["18-ea", "18"]'
-      java-dist-matrix: '["zulu", "temurin", "liberica"]'
+      java-matrix:  '["18"]'
+      java-dist-matrix: '["zulu"]'
 
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
@@ -28,3 +28,77 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
       GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
+  build-18-ea-zulu:
+    name: 18-ea zulu
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18-ea"]'
+      java-dist-matrix: '["zulu"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+
+  build-18-temurin:
+    name: 18 temurin
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18"]'
+      java-dist-matrix: '["temurin"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+
+  build-18-ea-temurin:
+    name: 18-ea temurin
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18-ea"]'
+      java-dist-matrix: '["temurin"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+
+  build-18-liberica:
+    name: 18 liberica
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18"]'
+      java-dist-matrix: '["liberica"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+
+  build-18-ea-liberica:
+    name: 18-ea liberica
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["18-ea"]'
+      java-dist-matrix: '["liberica"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
