@@ -18,7 +18,7 @@ jobs:
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
       java-matrix:  '["18-ea", "18"]'
-      java-dist-matrix: '["zulu", "temurin"]'
+      java-dist-matrix: '["zulu", "temurin", "liberica"]'
 
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
