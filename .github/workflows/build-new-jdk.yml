@@ -26,7 +26,6 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
   build-18-ea-zulu:
     name: 18-ea zulu
@@ -41,7 +40,6 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
   build-18-temurin:
     name: 18 temurin
@@ -56,7 +54,6 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
   build-18-ea-temurin:
     name: 18-ea temurin
@@ -71,7 +68,6 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
   build-18-liberica:
     name: 18 liberica
@@ -86,7 +82,6 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
 
   build-18-ea-liberica:
     name: 18-ea liberica
@@ -101,4 +96,3 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
-      GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
