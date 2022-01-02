@@ -31,5 +31,6 @@ public class TestApp {
 
     void run() {
         LOGGER.info("Test App is running");
+        throw new RuntimeException("Ups...");
     }
 }
