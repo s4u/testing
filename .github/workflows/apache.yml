@@ -9,5 +9,7 @@ jobs:
     name: Verify
     uses: apache/maven-gh-actions-shared/.github/workflows/maven-verify.yml@v2
     with:
+      ff-goal: validate
+      verify-fail-fast: false
       failure-upload-path: |
-        **/target/**
+        **/target/surefire-reports/**
