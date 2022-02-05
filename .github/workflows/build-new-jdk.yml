@@ -28,6 +28,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-18-ea-zulu:
+    needs: build-18-zulu
     name: 18-ea zulu
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
@@ -42,6 +43,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-18-temurin:
+    needs: build-18-ea-zulu
     name: 18 temurin
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
@@ -56,6 +58,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-18-ea-temurin:
+    needs: build-18-temurin
     name: 18-ea temurin
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
@@ -70,6 +73,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-18-liberica:
+    needs: build-18-ea-temurin
     name: 18 liberica
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
@@ -84,6 +88,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-18-ea-liberica:
+    needs: build-18-liberica
     name: 18-ea liberica
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
