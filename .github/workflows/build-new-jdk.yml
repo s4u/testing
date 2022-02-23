@@ -26,3 +26,16 @@ jobs:
       OSS_USER:       ${{ secrets.OSS_USER }}
       OSS_PASS:       ${{ secrets.OSS_PASS }}
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+
+  verify-ok:
+    name: OK
+    needs: [ build ]
+    if: allways()
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo ok
+        if: success()
+
+      - run: exit 1
+        if: failure() || cancelled()
