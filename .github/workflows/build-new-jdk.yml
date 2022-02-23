@@ -34,8 +34,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ok
-        if: success()
+      - run: 'true'
+        if: needs.build.statu == 'success'
 
-      - run: exit 1
-        if: failure() || cancelled()
+      - run: 'false'
+        if: needs.build.statu != 'success'
