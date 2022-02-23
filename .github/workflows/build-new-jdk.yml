@@ -30,7 +30,7 @@ jobs:
   verify-ok:
     name: OK
     needs: [ build ]
-    if: allways()
+    if: always()
     runs-on: ubuntu-latest
 
     steps:
