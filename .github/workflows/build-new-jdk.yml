@@ -19,7 +19,7 @@ jobs:
     name: build 18
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
-      java-matrix:  '["18", "18-ea"]'
+      java-matrix:  '["18", "19-ea"]'
       java-dist-matrix: '["zulu", "temurin", "liberica"]'
 
     secrets:
