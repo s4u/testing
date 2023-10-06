@@ -7,20 +7,34 @@ on:
       - 'main'
     tags:
       - 'v*'
-  
+
   workflow_dispatch:
-  
+
   schedule:
     - cron: '55 5 * * 5'
 
 jobs:
 
-  build:
-    name: build 18
+  build-21:
+    name: build 21
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
-      java-matrix:  '["18", "19-ea"]'
-      java-dist-matrix: '["zulu", "temurin", "liberica", "microsoft", "corretto"]'
+      java-matrix:  '["21"]'
+      java-dist-matrix: '["zulu", "temurin", "liberica", "microsoft", "corretto", "semeru"]'
+
+    secrets:
+      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
+      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
+      OSS_USER:       ${{ secrets.OSS_USER }}
+      OSS_PASS:       ${{ secrets.OSS_PASS }}
+      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+
+  build-22:
+    name: build 22
+    uses: s4u/.github/.github/workflows/maven-build.yml@master
+    with:
+      java-matrix:  '["22-ea"]'
+      java-dist-matrix: '["zulu", "temurin", "liberica", "microsoft", "corretto", "semeru"]'
 
     secrets:
       SIGN_KEY:       ${{ secrets.SIGN_KEY }}
@@ -31,13 +45,13 @@ jobs:
 
   verify-ok:
     name: OK
-    needs: [ build ]
+    needs: [ build-21, build-22 ]
     if: always()
     runs-on: ubuntu-latest
 
     steps:
       - run: 'true'
-        if: needs.build.statu == 'success'
+        if: needs.build.result == 'success'
 
       - run: 'false'
-        if: needs.build.statu != 'success'
+        if: needs.build.result != 'success'
