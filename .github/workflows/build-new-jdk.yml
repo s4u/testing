@@ -30,6 +30,7 @@ jobs:
       TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
 
   build-22:
+    needs: [ build-21 ]
     name: build 22
     uses: s4u/.github/.github/workflows/maven-build.yml@master
     with:
