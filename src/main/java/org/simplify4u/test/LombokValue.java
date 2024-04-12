@@ -16,13 +16,13 @@
 
 package org.simplify4u.test;
 
-import lombok.Data;
+import lombok.Value;
 
 /**
  * lombok Data with private fields
  */
-@Data
-public class LombokData {
+@Value
+public class LombokValue {
     private String test1;
 
     private String test2;

@@ -16,27 +16,16 @@
 
 package org.simplify4u.test;
 
-import org.junit.jupiter.api.Test;
+import lombok.Builder;
+import lombok.Value;
 
-import static org.junit.jupiter.api.Assertions.*;
+/**
+ * lombok Data with private fields
+ */
+@Value
+@Builder
+public class LombokValueBuilder {
+    private String test1;
 
-class LombokDataTest {
-
-    @Test
-    void test1() {
-        LombokData test = LombokData.builder()
-                .test1("test1")
-                .build();
-        assertNotNull(test);
-        assertEquals("test1", test.getTest1());
-        assertTrue(test.toString().contains("test1"));
-
-
-        LombokData test2 = LombokData.builder()
-                .test2("test2")
-                .build();
-
-        assertNotEquals(test, test2);
-    }
-
+    private String test2;
 }
