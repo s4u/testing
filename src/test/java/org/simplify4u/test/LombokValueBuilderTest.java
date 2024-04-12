@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LombokValueTest {
+class LombokValueBuilderTest {
 
     @Test
     void test() {
-        LombokValue test1 = new LombokValue("1", "2");
-        LombokValue test2 = new LombokValue("1", "2");
+        LombokValueBuilder test1 = new LombokValueBuilder("1", "2");
+        LombokValueBuilder test2 = new LombokValueBuilder("1", "2");
         assertNotNull(test1);
         assertEquals("1", test1.getTest1());
         assertTrue(test1.toString().contains("test1"));

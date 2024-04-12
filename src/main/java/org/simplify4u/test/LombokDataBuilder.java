@@ -25,7 +25,10 @@ import lombok.NoArgsConstructor;
  * lombok Data with private fields
  */
 @Data
-public class LombokData {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class LombokDataBuilder {
     private String test1;
 
     private String test2;

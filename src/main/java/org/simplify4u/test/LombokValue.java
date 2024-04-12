@@ -23,7 +23,6 @@ import lombok.Value;
  * lombok Data with private fields
  */
 @Value
-@Builder
 public class LombokValue {
     private String test1;
 
