@@ -16,12 +16,14 @@
 
 package org.simplify4u.test;
 
+import lombok.Builder;
 import lombok.Value;
 
 /**
  * lombok Data with private fields
  */
 @Value
+@Builder
 public class LombokValue {
     private String test1;
 
