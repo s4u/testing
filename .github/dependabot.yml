@@ -1,14 +1,7 @@
 version: 2
 
-registries:
-  maven-central:
-    type: maven-repository
-    url: https://repo.maven.apache.org/
-
 updates:
   - package-ecosystem: maven
     directory: "/"
-    registries:
-      - maven-central
     schedule:
       interval: daily
