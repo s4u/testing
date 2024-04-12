@@ -16,10 +16,7 @@
 
 package org.simplify4u.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * lombok Data with private fields
