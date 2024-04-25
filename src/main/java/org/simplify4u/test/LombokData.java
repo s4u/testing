@@ -23,7 +23,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * lombok Data with private fields
@@ -32,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Slf4j
 public class LombokData {
     private String test1;
 
