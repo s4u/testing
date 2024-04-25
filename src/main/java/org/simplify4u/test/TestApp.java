@@ -25,6 +25,7 @@ public class TestApp {
 
     private static final Logger LOGGER = Logger.getAnonymousLogger();
 
+    @SuppressWarnings("squid:S1176")
     public static void main(String[] args) {
         new TestApp().run();
     }
