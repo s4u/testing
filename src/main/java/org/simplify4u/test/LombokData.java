@@ -16,14 +16,29 @@
 
 package org.simplify4u.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * lombok Data with private fields
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Slf4j
 public class LombokData {
     private String test1;
 
     private String test2;
+
+    private boolean test3;
+
+    private Map<String, String> mapTest = new HashMap<>();
 }
