@@ -3,6 +3,7 @@ name: Env-Info
 on:
   push:
   pull_request:
+  workflow_dispatch:
   issues:
     types: [opened]
 
