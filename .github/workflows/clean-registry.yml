@@ -1,0 +1,16 @@
+name: Env-Info
+
+on:
+  workflow_dispatch:
+
+#  schedule:
+#    - cron: '55 5 * * *'
+
+jobs:
+  clean:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'org.simplify4u.test.test'
+          package-type: 'maven'
