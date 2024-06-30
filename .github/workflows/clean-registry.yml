@@ -1,4 +1,4 @@
-name: Env-Info
+name: Clean-Registry
 
 on:
   workflow_dispatch:
