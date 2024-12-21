@@ -30,7 +30,17 @@ jobs:
             contains(github.event.pull_request.labels.*.name, 'dependencies')
           )
 
-        run: | 
+        run: |
           echo "PR should have on of label: bug, dependencies"
           false
 
+      - name: Current Milestone
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const milestones = github.rest.issues.listMilestones({
+              owner: context.repo.owner
+              repo: context.repo.repo
+              state: 'open'
+            });
+            console.log(milestones);
