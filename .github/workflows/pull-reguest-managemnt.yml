@@ -31,6 +31,7 @@ jobs:
             contains(github.event.pull_request.labels.*.name, 'dependencies')
           )
 
-        run: > 
+        run: | 
+          echo "PR should have on of label: bug, dependencies"
           false
 
