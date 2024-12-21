@@ -39,8 +39,8 @@ jobs:
         with:
           script: |
             const milestones = github.rest.issues.listMilestones({
-              owner: context.repo.owner
-              repo: context.repo.repo
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               state: 'open'
             });
             console.log(milestones);
