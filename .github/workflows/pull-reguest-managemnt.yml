@@ -19,9 +19,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: Current labels
-        run: > 
-          echo "PR#${{github.event.pull_request.number}} labels: ${{ join(github.event.pull_request.labels.*.name, ', ') }}"
+      - name: Current labels - ${{ join(github.event.pull_request.labels.*.name, ', ') }}
+        run: "true"
 
       - name: Required labels missing
         if: >
