@@ -32,7 +32,6 @@ body:
     id: massage
     attributes:
       label: Please describe a bug
-      render: markdown
 
   - type: input
     id: url
