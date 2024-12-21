@@ -17,26 +17,18 @@
 
 # https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
 
-name: Site Bug Report
-description: File a bug report.
-title: "[Site Bug]: "
-labels: ["bug"]
+name: Improvement proposition
+description: File a improvement proposition.
+labels: ["enhancement"]
 
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!      
+        Thanks for taking the time to fill out this improvement proposition!
 
   - type: textarea
     id: massage
     attributes:
-      label: Please describe a bug
+      label: Please describe a improvement proposition.
 
-  - type: input
-    id: url
-    attributes:
-      label: Maven site address where bug exist
-      placeholder: https://maven.apache.org/...
-    validations:
-      required: true
