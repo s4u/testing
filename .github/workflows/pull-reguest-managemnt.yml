@@ -25,7 +25,7 @@ jobs:
 
       - name: Required labels missing
         if: >
-          event.pull_request.draft == false &&
+          github.event.pull_request.draft == false &&
           !(
             contains(github.event.pull_request.labels.*.name, 'bug') ||
             contains(github.event.pull_request.labels.*.name, 'dependencies')
