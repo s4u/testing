@@ -44,7 +44,7 @@ jobs:
   milistopns:
     needs: review-decision
     runs-on: ubuntu-latest
-    if: github.event.pull_request.milestone != null
+    if: github.event.pull_request.milestone != null && needs.review-decision.outputs.decision == 'APPROVED'
     steps:
       - name: Get Milestone
         uses: actions/github-script@v7
@@ -60,6 +60,7 @@ jobs:
   labels:
     needs: review-decision
     runs-on: ubuntu-latest
+    if: needs.review-decision.outputs.decision == 'APPROVED'
     steps:
       - name: Current labels - ${{ join(github.event.pull_request.labels.*.name, ', ') }}
         run: "true"
