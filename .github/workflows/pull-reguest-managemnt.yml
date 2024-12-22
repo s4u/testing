@@ -94,10 +94,11 @@ jobs:
 
     needs: review-decision
     runs-on: ubuntu-latest
-    if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && github.event.pull_request.labels == '[]'
     steps:
 
       - name: Set default label
+        if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && github.event.pull_request.labels == '[]'
+
         uses: actions/github-script@v7
         env:
           DEFAULT_LABEL: "maintenance"
