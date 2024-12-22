@@ -49,7 +49,7 @@ jobs:
     if:  needs.review-decision.outputs.decision == 'APPROVED' && github.event.pull_request.milestone == null
     runs-on: ubuntu-latest
     steps:
-      - name: Get Milestone
+      - name: Update milestone
         uses: actions/github-script@v7
         with:
           script: |
@@ -58,7 +58,27 @@ jobs:
               repo: context.repo.repo,
               state: 'open'
             });
+            
             console.log(milestones);
+            
+            if ( milestones.data.length == 0 ) {
+              throw new Error('There are no open milestones ... please create one')
+            }
+
+            if ( milestones.data.length > 0 ) {
+              throw new Error('There are more then oen open milestones ... please choose manually')
+            }
+            
+            const result = await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              body: {
+                milestone: milestones.data.get(0).number
+              }
+            });
+            
+            console.log(result);
 
   labels:
     needs: review-decision
