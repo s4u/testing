@@ -9,6 +9,8 @@ on:
     types:
       - submitted
 
+permissions: {}
+
 jobs:
   review-decision:
     if: github.event.pull_request.draft == false
@@ -45,6 +47,10 @@ jobs:
         run: echo "${{ steps.review-decision.outputs.result }}"
 
   milestone:
+    permissions:
+      issues: write
+      pull-requests: write
+
     needs: review-decision
     if:  needs.review-decision.outputs.decision == 'APPROVED' && github.event.pull_request.milestone == null
     runs-on: ubuntu-latest
@@ -69,7 +75,7 @@ jobs:
               throw new Error('There are more then oen open milestones ... please choose manually')
             }
             
-            const result = await github.rest.pulls.update({
+            const result = await github.rest.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
