@@ -65,7 +65,7 @@ jobs:
               throw new Error('There are no open milestones ... please create one')
             }
 
-            if ( milestones.data.length > 0 ) {
+            if ( milestones.data.length > 1 ) {
               throw new Error('There are more then oen open milestones ... please choose manually')
             }
             
