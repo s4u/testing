@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Dump github
-        run: echo ${{ toJson(github) }}
+        run: echo '${{ toJson(github) }}'
 
       - name: Get Review decision
         id: review-decision
@@ -56,9 +56,7 @@ jobs:
       pull-requests: write
 
     needs: review-decision
-    if: >
-      github.event.pull_request.milestone == null && 
-      ( needs.review-decision.outputs.approved || github.event.action == 'demilestoned' )
+    if: ( needs.review-decision.outputs.approved || github.event.action == 'demilestoned' ) && !github.event.pull_request.milestone
     runs-on: ubuntu-latest
     steps:
       - name: Update milestone
@@ -99,9 +97,7 @@ jobs:
 
     needs: review-decision
     runs-on: ubuntu-latest
-    if: >
-      github.event.pull_request.labels == null &&
-      ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' )
+    if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && !github.event.pull_request.labels
     steps:
 
       - name: Set default label
