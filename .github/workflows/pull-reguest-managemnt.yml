@@ -94,7 +94,7 @@ jobs:
 
     needs: review-decision
     runs-on: ubuntu-latest
-    if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && !github.event.pull_request.labels
+    if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && github.event.pull_request.labels != '[]'
     steps:
 
       - name: Set default label
