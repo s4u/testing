@@ -78,7 +78,7 @@ jobs:
             const result = await github.rest.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.issue.number,
+              issue_number: context.issue.number,
               milestone: milestones.data[0].number
             });
             
