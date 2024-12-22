@@ -19,6 +19,19 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+      - name: List Reviews
+        if: >
+          github.event.pull_request.draft == false
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reviews = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            console.log(reviews);
+
       - name: Current labels - ${{ join(github.event.pull_request.labels.*.name, ', ') }}
         run: "true"
 
@@ -34,10 +47,15 @@ jobs:
           echo "PR should have on of label: bug, dependencies"
           false
 
-      - name: Current Milestone
+      - name: Check Milestone
+        if: >
+          github.event.pull_request.draft == false
         uses: actions/github-script@v7
         with:
           script: |
+            console.log(context.event.pull_request.labels)
+            console.log(context.event.pull_request.milestone)
+            
             const milestones = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
               repo: context.repo.repo,
