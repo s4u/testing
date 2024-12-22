@@ -73,9 +73,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              body: {
-                milestone: milestones.data[0].number
-              }
+              milestone: milestones.data[0].number
             });
             
             console.log(result);
