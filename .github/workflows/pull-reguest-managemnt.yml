@@ -3,6 +3,7 @@ name: Pull Request Management
 on:
   pull_request:
     types:
+      - closed
       - labeled
       - unlabeled
   pull_request_review:
@@ -16,7 +17,7 @@ jobs:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     outputs:
-      decision: ${{ steps.review-decision.outputs.result }}
+      approved: ${{ steps.review-decision.outputs.result }}
 
     steps:
       - name: Get Review decision
@@ -28,7 +29,7 @@ jobs:
             const query = `query($owner:String!, $name:String!, $number:Int!) {
               repository(name: $name, owner: $owner) {
                 pullRequest(number: $number) {
-                  reviewDecision
+                  reviewDecision, merged
                 }
               }
             }`;
@@ -42,7 +43,7 @@ jobs:
             const result = await github.graphql(query, variables)
             console.log(result)
             
-            return result.repository.pullRequest.reviewDecision;
+            return result.repository.pullRequest.reviewDecision == 'APPROVED' || result.repository.pullRequest.merged
       - name: Result
         run: echo "${{ steps.review-decision.outputs.result }}"
 
@@ -52,7 +53,7 @@ jobs:
       pull-requests: write
 
     needs: review-decision
-    if:  needs.review-decision.outputs.decision == 'APPROVED' && github.event.pull_request.milestone == null
+    if:  needs.review-decision.outputs.approved && github.event.pull_request.milestone == null
     runs-on: ubuntu-latest
     steps:
       - name: Update milestone
@@ -87,20 +88,16 @@ jobs:
   labels:
     needs: review-decision
     runs-on: ubuntu-latest
-    if: needs.review-decision.outputs.decision == 'APPROVED'
+    if: needs.review-decision.outputs.approved || contains(fromJSON('["labeled", "unlabeled"]'), github.event.action)
     steps:
-      - name: Current labels - ${{ join(github.event.pull_request.labels.*.name, ', ') }}
-        run: "true"
 
-      - name: Required labels missing
-        if: >
-          github.event.pull_request.draft == false &&
-          !(
-            contains(github.event.pull_request.labels.*.name, 'bug') ||
-            contains(github.event.pull_request.labels.*.name, 'dependencies')
-          )
-
-        run: |
-          echo "PR should have on of label: bug, dependencies"
-          false
-
+      - name: Check labels
+        uses: actions/github-script@v7
+        env:
+          DEFAULT_LABEL: "maintenance"
+        with:
+          script: |
+            
+            console.log(context);
+            
+            console.log(process.env);
