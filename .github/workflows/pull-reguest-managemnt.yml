@@ -26,17 +26,27 @@ jobs:
         with:
           script: |
             console.log(context);
-          
-            const reviews = await github.paginate(github.rest.pulls.listReviews,{
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
             
-            console.log(reviews);
-            const reviewFromMember = reviews.data.some(review => 
-              review.author_association == "MEMBER" && review.state == "APPROVED")
-            return reviewFromMember 
+            const query = `query($owner:String!, $name:String!, $number:Int!) {
+              repository(name: "gatsby", owner: "gatsbyjs") {
+                pullRequest(number: $number) {
+                  title
+                  reviewDecision
+                  url
+                }
+              }
+            }`;
+            
+            const variables = {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              number: context.issue.number
+            }
+            
+            const result = await github.graphql(query, variables)
+            console.log(result)
+            
+            return result;
 
       - name: Review result
         run: echo "${{steps.list-reviews.outputs.result}}"
