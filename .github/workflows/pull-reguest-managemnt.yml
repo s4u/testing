@@ -28,7 +28,7 @@ jobs:
             console.log(context);
             
             const query = `query($owner:String!, $name:String!, $number:Int!) {
-              repository(name: "gatsby", owner: "gatsbyjs") {
+              repository(name: $name, owner: $owner) {
                 pullRequest(number: $number) {
                   title
                   reviewDecision
