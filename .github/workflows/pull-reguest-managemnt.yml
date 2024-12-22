@@ -21,6 +21,7 @@ jobs:
         id: review-decision
         uses: actions/github-script@v7
         with:
+          result-encoding: string
           script: |
             const query = `query($owner:String!, $name:String!, $number:Int!) {
               repository(name: $name, owner: $owner) {
@@ -40,6 +41,8 @@ jobs:
             console.log(result)
             
             return result.repository.pullRequest.reviewDecision;
+      - name: Result
+        run: echo "${{ steps.review-decision.outputs.result }}"
 
   milistopns:
     needs: review-decision
