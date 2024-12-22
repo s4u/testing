@@ -97,7 +97,7 @@ jobs:
     steps:
 
       - name: Set default label
-        if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && github.event.pull_request.labels == '[]'
+        if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && toJSON(github.event.pull_request.labels) == '[]'
 
         uses: actions/github-script@v7
         env:
