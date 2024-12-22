@@ -93,11 +93,11 @@ jobs:
       pull-requests: write
 
     needs: review-decision
+    if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && toJSON(github.event.pull_request.labels) == '[]'
     runs-on: ubuntu-latest
     steps:
 
       - name: Set default label
-        if: ( needs.review-decision.outputs.approved || github.event.action == 'unlabeled' ) && toJSON(github.event.pull_request.labels) == '[]'
 
         uses: actions/github-script@v7
         env:
