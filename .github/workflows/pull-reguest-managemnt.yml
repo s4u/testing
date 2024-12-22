@@ -27,16 +27,16 @@ jobs:
           script: |
             console.log(context);
           
-            const reviews = await github.rest.pulls.listReviews({
+            const reviews = await github.paginate(github.rest.pulls.listReviews,{
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
             
             console.log(reviews);
-            const reviewFromMember = reviews.data.find(review => review.author_association == "MEMBER" )
-            console.log(reviewFromMember);
-            return reviewFromMember;
+            const reviewFromMember = reviews.data.some(review => 
+              review.author_association == "MEMBER" && review.state == "APPROVED")
+            return reviewFromMember 
 
       - name: Review result
         run: echo "${{steps.list-reviews.outputs.result}}"
