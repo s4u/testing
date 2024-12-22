@@ -44,10 +44,10 @@ jobs:
       - name: Result
         run: echo "${{ steps.review-decision.outputs.result }}"
 
-  milistopns:
+  milestone:
     needs: review-decision
+    if:  needs.review-decision.outputs.decision == 'APPROVED' && github.event.pull_request.milestone == null
     runs-on: ubuntu-latest
-    if: github.event.pull_request.milestone != null && needs.review-decision.outputs.decision == 'APPROVED'
     steps:
       - name: Get Milestone
         uses: actions/github-script@v7
