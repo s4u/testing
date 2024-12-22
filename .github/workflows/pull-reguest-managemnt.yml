@@ -34,7 +34,9 @@ jobs:
             });
             
             console.log(reviews);
-            reviews.data.find(review => review.author_association == "MEMBER" )
+            const reviewFromMember = reviews.data.find(review => review.author_association == "MEMBER" )
+            console.log(reviewFromMember);
+            return reviewFromMember;
 
       - name: Review result
         run: echo "${{steps.list-reviews.outputs.result}}"
