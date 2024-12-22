@@ -21,6 +21,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - name: List Reviews
+        id: list-reviews
         uses: actions/github-script@v7
         with:
           script: |
@@ -31,7 +32,12 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
+            
             console.log(reviews);
+            reviews.data.find(review -> review.author_association == "MEMBER" )
+
+      - name: Review result
+        run: echo "${{steps.list-reviews.outputs.result}}"
 
       - name: Current labels - ${{ join(github.event.pull_request.labels.*.name, ', ') }}
         run: "true"
@@ -53,10 +59,7 @@ jobs:
           github.event.pull_request.draft == false
         uses: actions/github-script@v7
         with:
-          script: |
-            console.log(context.event.pull_request.labels)
-            console.log(context.event.pull_request.milestone)
-            
+          script: |            
             const milestones = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
               repo: context.repo.repo,
