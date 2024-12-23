@@ -20,6 +20,12 @@ jobs:
       approved: ${{ steps.review-decision.outputs.result }}
 
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
+
       - name: Get Review decision
         id: review-decision
         uses: actions/github-script@v7
@@ -29,7 +35,7 @@ jobs:
             const query = `query($owner:String!, $name:String!, $number:Int!) {
               repository(name: $name, owner: $owner) {
                 pullRequest(number: $number) {
-                  reviewDecision, merged
+                  reviewDecision, merged, closed
                 }
               }
             }`;
@@ -42,8 +48,8 @@ jobs:
             
             const result = await github.graphql(query, variables)
             console.log(result)
-            
-            return result.repository.pullRequest.reviewDecision == 'APPROVED' || result.repository.pullRequest.merged
+            const pr = result.repository.pullRequest; 
+            return (pr.reviewDecision == 'APPROVED' && !pr.closed) || pr.merged
       - name: Result
         run: echo "${{ steps.review-decision.outputs.result }}"
 
