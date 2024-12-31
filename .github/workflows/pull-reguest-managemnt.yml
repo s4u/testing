@@ -98,17 +98,18 @@ jobs:
             });
             
             console.log(milestones);            
-            console.log(context);
+            console.log(context.payload.pull_request);
+            const branch = context.payload.pull_request.base.ref
             
             if ( milestones.data.length == 0 ) {
               throw new Error('There are no open milestones ... please create one')
             }
 
-            var milestone;
+            const milestone;
             if ( milestones.data.length > 1 ) {
-              milestone = milestones.data.find(({description}) => description.includes('branch: ' + context.base_ref));
+              milestone = milestones.data.find(({description}) => description.includes('branch: ' + branch));
               if (!milestone) {
-                throw new Error('There are more then oen open milestones ... please add a branch: name to description')
+                throw new Error('There are more then oen open milestones ... please add a "branch: ' + branch + '" to description');
               }
             } else {
               milestone = milestones.data[0];
