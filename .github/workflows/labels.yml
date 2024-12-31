@@ -2,6 +2,11 @@ name: Labels sync
 
 on:
   workflow_dispatch:
+    inputs:
+      token:
+        description: PAT Token to perform action
+        default: ${{ github.token }}
+        type: string
 
 jobs:
   sync-label:
@@ -9,7 +14,7 @@ jobs:
     strategy:
       matrix:
         repo:
-          - s4u/testing
+          - testing
 
     steps:
       - name: Sync labels on ${{ matrix.repo }}
@@ -17,9 +22,10 @@ jobs:
         env:
           REPO: ${{ matrix.repo }}
         with:
+          github-token: ${{ inputs.token }}
           script: |
             const currentLabels = await github.rest.issues.listLabelsForRepo({
-              owner: context.repo.owner,
+              owner: 's4u',
               repo: process.env.REPO
             });
             
