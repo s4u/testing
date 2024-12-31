@@ -97,7 +97,8 @@ jobs:
               state: 'open'
             });
             
-            console.log(milestones);
+            console.log(milestones);            
+            console.log(context);
             
             if ( milestones.data.length == 0 ) {
               throw new Error('There are no open milestones ... please create one')
@@ -113,7 +114,8 @@ jobs:
               milestone = milestones.data[0];
             }
             
-            console.log('Set milestone to: ' + milestone);
+            console.log('Set milestone to:');
+            console.log(milestone);
             
             const result = await github.rest.issues.update({
               owner: context.repo.owner,
