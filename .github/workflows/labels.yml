@@ -11,6 +11,7 @@ jobs:
         repo:
           - testing
 
+
     steps:
       - name: Sync labels on ${{ matrix.repo }}
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
@@ -20,18 +21,7 @@ jobs:
           github-token: ${{ github.token }}
           script: |
             
-            const labels = [
-              {
-                name: 'bug',
-                color: 'B60205',
-                description: 'Something isn't working.'              
-              },
-              {
-                name: 'duplicate',
-                color: 'cfd3d7',
-                description: 'This issue or pull request already exists.'
-              }
-            ];
+            const labels = [];
             
             const currentLabels = await github.rest.issues.listLabelsForRepo({
               owner: 's4u',
@@ -52,14 +42,29 @@ jobs:
 
               console.log('cLabel: ');
               console.log(currentLabel);
-
-              // if (!currentLabel) {
-                // no label add new
-                // console.log('Add label: ' + label.name);
-              // } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
-                // need to update
-                // console.log('Update label: ' + label.name);
-              // } else {
-                // console.log('Label: ' + label.name + ' is up to date');
-              // }
             }
+
+
+#              // if (!currentLabel) {
+#                // no label add new
+#                // console.log('Add label: ' + label.name);
+#              // } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
+#                // need to update
+#                // console.log('Update label: ' + label.name);
+#              // } else {
+#                // console.log('Label: ' + label.name + ' is up to date');
+#              // }
+#            }
+
+#            const labels = [
+#              {
+#                name: 'bug',
+#                color: 'B60205',
+#                description: 'Something isn't working.'
+#              },
+#              {
+#                name: 'duplicate',
+#                color: 'cfd3d7',
+#                description: 'This issue or pull request already exists.'
+#              }
+#            ];
