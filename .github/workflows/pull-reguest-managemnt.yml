@@ -105,7 +105,7 @@ jobs:
               throw new Error('There are no open milestones ... please create one')
             }
 
-            const milestone;
+            var milestone;
             if ( milestones.data.length > 1 ) {
               milestone = milestones.data.find(({description}) => description.includes('branch: ' + branch));
               if (!milestone) {
