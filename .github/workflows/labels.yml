@@ -25,7 +25,12 @@ jobs:
               {
                 name: 'bug',
                 color: 'B60205',
-                description: 'Something isn't working.'
+                description: 'Something isn\'t working.'
+              },
+              {
+                name: 'duplicate',
+                color: 'cfd3d7',
+                description: 'This issue or pull request already exists.'
               }
             ];
           
@@ -46,31 +51,17 @@ jobs:
               console.log('Label: ');
               console.log(label);
 
-              console.log('cLabel: ');
+              console.log('currentLabel: ');
               console.log(currentLabel);
+            
+              if (!currentLabel) {
+                console.log('Add label: ' + label.name);
+              } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
+                console.log('Update label: ' + label.name);
+              } else {
+                console.log('Label: ' + label.name + ' is up to date');
+              }
             }
 
 
-#              // if (!currentLabel) {
-#                // no label add new
-#                // console.log('Add label: ' + label.name);
-#              // } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
-#                // need to update
-#                // console.log('Update label: ' + label.name);
-#              // } else {
-#                // console.log('Label: ' + label.name + ' is up to date');
-#              // }
-#            }
 
-#            const labels = [
-#              {
-#                name: 'bug',
-#                color: 'B60205',
-#                description: 'Something isn't working.'
-#              },
-#              {
-#                name: 'duplicate',
-#                color: 'cfd3d7',
-#                description: 'This issue or pull request already exists.'
-#              }
-#            ];
