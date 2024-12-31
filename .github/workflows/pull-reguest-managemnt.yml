@@ -53,6 +53,8 @@ jobs:
         with:
           result-encoding: string
           script: |
+            console.log(context);
+
             const query = `query($owner:String!, $name:String!, $number:Int!) {
               repository(name: $name, owner: $owner) {
                 pullRequest(number: $number) {
@@ -100,17 +102,23 @@ jobs:
               throw new Error('There are no open milestones ... please create one')
             }
 
+            var milestone;
             if ( milestones.data.length > 1 ) {
-              throw new Error('There are more then oen open milestones ... please choose manually')
+              milestone = milestones.data.find(({description}) => description.includes('branch: ' + context.base_ref));
+              if (!milestone) {
+                throw new Error('There are more then oen open milestones ... please add a branch: name to description')
+              }
+            } else {
+              milestone = milestones.data[0];
             }
             
-            console.log('Set milestone to: ' + milestones.data[0].title);
+            console.log('Set milestone to: ' + milestone);
             
             const result = await github.rest.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              milestone: milestones.data[0].number
+              milestone: milestones.number
             });
             
             console.log(result);
