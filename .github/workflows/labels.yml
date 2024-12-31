@@ -46,7 +46,7 @@ jobs:
             console.log(labels);
             
             for (const label of labels) {
-              const currentLabel = currentLabels.find(({name}) => name == label.name);
+              const currentLabel = currentLabels.data.find(({name}) => name == label.name);
 
               console.log('Label: ');
               console.log(label);
