@@ -1,5 +1,5 @@
 
-const labels = [
+module.exports = [
     {
         name: 'bug',
         color: 'B60205',
@@ -10,8 +10,4 @@ const labels = [
         color: 'cfd3d7',
         description: 'This issue or pull request already exists.'
     }
-];
-
-module.exports = {
-    labels
-}
+]
