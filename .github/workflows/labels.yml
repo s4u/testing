@@ -19,10 +19,47 @@ jobs:
         with:
           github-token: ${{ github.token }}
           script: |
+            
+            const labels = [
+              {
+                name: 'bug',
+                color: 'B60205',
+                description: 'Something isn't working.'              
+              },
+              {
+                name: 'duplicate',
+                color: 'cfd3d7',
+                description: 'This issue or pull request already exists.'
+              }
+            ];
+            
             const currentLabels = await github.rest.issues.listLabelsForRepo({
               owner: 's4u',
               repo: process.env.REPO
             });
             
+            console.log('currentLabels:');
             console.log(currentLabels);
 
+            console.log('labels:');
+            console.log(labels);
+            
+            for (const label of labels) {
+              const currentLabel = currentLabels.find(({name}) => name == label.name);
+
+              console.log('Label: ');
+              console.log(label);
+
+              console.log('cLabel: ');
+              console.log(currentLabel);
+
+              if (!currentLabel) {
+                // no label add new
+                console.log('Add label: ' + label.name);
+              } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
+                // need to update
+                console.log('Update label: ' + label.name);
+              } else {
+                console.log('Label: ' + label.name + ' is up to date');
+              }
+            }
