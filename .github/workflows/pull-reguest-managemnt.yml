@@ -17,13 +17,14 @@
 
 name: PR Automation
 on:
-  workflow_call:
-    inputs:
-      default-label:
-        description: The default label to add to PR
-        required: false
-        default: 'maintenance'
-        type: string
+  pull_request:
+    types:
+      - closed
+      - unlabeled
+      - demilestoned
+  pull_request_review:
+    types:
+      - submitted
 
 # allow single build per branch or PR
 concurrency:
