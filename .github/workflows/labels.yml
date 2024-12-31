@@ -53,13 +53,13 @@ jobs:
               console.log('cLabel: ');
               console.log(currentLabel);
 
-              if (!currentLabel) {
+              // if (!currentLabel) {
                 // no label add new
-                console.log('Add label: ' + label.name);
-              } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
+                // console.log('Add label: ' + label.name);
+              // } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
                 // need to update
-                console.log('Update label: ' + label.name);
-              } else {
-                console.log('Label: ' + label.name + ' is up to date');
-              }
+                // console.log('Update label: ' + label.name);
+              // } else {
+                // console.log('Label: ' + label.name + ' is up to date');
+              // }
             }
