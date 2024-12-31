@@ -21,12 +21,18 @@ jobs:
           github-token: ${{ github.token }}
           script: |
             
-            const labels = [];
-            
+            const labels = [
+              {
+                name: 'bug',
+                color: 'B60205',
+                description: 'Something isn't working.'
+              }
+            ];
+          
             const currentLabels = await github.rest.issues.listLabelsForRepo({
-              owner: 's4u',
-              repo: process.env.REPO
-            });
+                owner: 's4u',
+                repo: process.env.REPO
+              });
             
             console.log('currentLabels:');
             console.log(currentLabels);
