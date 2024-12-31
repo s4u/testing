@@ -55,9 +55,23 @@ jobs:
               console.log(currentLabel);
             
               if (!currentLabel) {
+  
                 console.log('Add label: ' + label.name);
+                github.rest.issues.createLabel({
+                  owner: 's4u',
+                  repo: process.env.REPO,
+                  ...label
+                });
+  
               } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
+                
                 console.log('Update label: ' + label.name);
+                github.rest.issues.updateLabel({
+                  owner: 's4u',
+                  repo: process.env.REPO,
+                  ...label
+                });
+            
               } else {
                 console.log('Label: ' + label.name + ' is up to date');
               }
