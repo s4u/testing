@@ -33,9 +33,6 @@ jobs:
         with:
           github-token: ${{ inputs.token }}
           script: |
-
-            core.setSecret(core.getInput('github-token'));
-
             const labels = require('./.github/labels.js');
 
             console.log('Labels to update:');
