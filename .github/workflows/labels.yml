@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Mask GitHub token
-        run: echo "::add-mask::${{ inputs.token }}"
+        run: env; echo "::add-mask::${{ inputs.token }}"
 
       - uses: actions/checkout@v3
 
