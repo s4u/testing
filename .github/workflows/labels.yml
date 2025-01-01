@@ -36,6 +36,8 @@ jobs:
             console.log('Labels to update:');
             console.log(labels);
             
+            console.log(process.env);
+            
             const currentLabels = await github.rest.issues.listLabelsForRepo({
                 owner: process.env.OWNER,
                 repo: process.env.REPO
