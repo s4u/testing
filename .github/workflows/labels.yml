@@ -2,6 +2,11 @@ name: Labels sync
 
 on:
   workflow_dispatch:
+    inputs:
+      token:
+        type: string
+        description: 'A GitHub token used to perform action'
+        required: true
 
 jobs:
   sync-label:
@@ -18,39 +23,40 @@ jobs:
       - name: Sync labels on ${{ matrix.repo }}
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         env:
+          OWNER: 's4u'
           REPO: ${{ matrix.repo }}
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ inputs.token }}
           script: |
             
             const labels = require('./.github/labels.js');
 
-            console.log('labels:');
+            console.log('Labels to update:');
             console.log(labels);
             
             const currentLabels = await github.rest.issues.listLabelsForRepo({
-                owner: 's4u',
+                owner: process.env.OWNER,
                 repo: process.env.REPO
               });
             
-            console.log('currentLabels:');
-            console.log(currentLabels);
+            console.log('Current project labels:');
+            console.log(currentLabels.data);
 
             
             for (const label of labels) {
               const currentLabel = currentLabels.data.find(({name}) => name == label.name);
 
-              console.log('Label: ');
+              console.log('Label:');
               console.log(label);
 
-              console.log('currentLabel: ');
+              console.log('currentLabel:');
               console.log(currentLabel);
             
               if (!currentLabel) {
   
                 console.log('Add label: ' + label.name);
                 github.rest.issues.createLabel({
-                  owner: 's4u',
+                  owner: process.env.OWNER
                   repo: process.env.REPO,
                   ...label
                 });
@@ -59,7 +65,7 @@ jobs:
                 
                 console.log('Update label: ' + label.name);
                 github.rest.issues.updateLabel({
-                  owner: 's4u',
+                  owner: process.env.OWNER
                   repo: process.env.REPO,
                   ...label
                 });
@@ -68,6 +74,3 @@ jobs:
                 console.log('Label: ' + label.name + ' is up to date');
               }
             }
-
-
-
