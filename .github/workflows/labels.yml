@@ -12,6 +12,8 @@ jobs:
   sync-label:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
+      max-parallel: 20
       matrix:
         repo:
           - testing
@@ -56,7 +58,7 @@ jobs:
   
                 console.log('Add label: ' + label.name);
                 github.rest.issues.createLabel({
-                  owner: process.env.OWNER
+                  owner: process.env.OWNER,
                   repo: process.env.REPO,
                   ...label
                 });
@@ -65,7 +67,7 @@ jobs:
                 
                 console.log('Update label: ' + label.name);
                 github.rest.issues.updateLabel({
-                  owner: process.env.OWNER
+                  owner: process.env.OWNER,
                   repo: process.env.REPO,
                   ...label
                 });
