@@ -5,7 +5,7 @@ on:
     inputs:
       token:
         type: string
-        description: 'A GitHub token used to perform action'
+        description: 'A GitHub token used to perform action - Read and Write access to issues and pull requests'
         required: true
 
 jobs:
