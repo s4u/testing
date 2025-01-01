@@ -20,8 +20,14 @@ jobs:
 
 
     steps:
+      - run: |
+          echo GITHUB_EVENT_PATH
+          cat $GITHUB_EVENT_PATH
+
       - name: Mask GitHub token
         run: env; echo "::add-mask::${{ inputs.token }}"
+
+
 
       - uses: actions/checkout@v3
 
