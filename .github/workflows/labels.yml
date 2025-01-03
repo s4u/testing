@@ -23,6 +23,8 @@ jobs:
             curl -s https://gitbox.apache.org/repositories.json | jq '.projects.maven.repositories | to_entries | sort_by(.key) | .[] | select(.value.description | contains("archived") | not) | .key' | jq -sc
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
+          
+          cat $GITHUB_OUTPUT
 
   sync-label:
     runs-on: ubuntu-latest
