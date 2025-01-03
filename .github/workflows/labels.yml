@@ -24,7 +24,7 @@ jobs:
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
           
-          cat $GITHUB_OUTPUT
+          cat "$GITHUB_OUTPUT"
 
   sync-label:
     runs-on: ubuntu-latest
