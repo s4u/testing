@@ -5,19 +5,33 @@ on:
     inputs:
       token:
         type: string
-        description: 'A GitHub token used to perform action - Read and Write access to issues and pull requests'
+        description: 'A GitHub token used to perform action - access token (classic) with repo'
         required: true
 
 jobs:
+  repos:
+    name: Prepare repositories list
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.repo.outputs.matrix }}
+
+    steps:
+      - id: repo
+        run: |
+          {
+            echo 'matrix<<EOF'          
+            curl -s https://gitbox.apache.org/repositories.json | jq '.projects.maven.repositories | to_entries | sort_by(.key) | .[] | select(.value.description | contains("archived") | not) | .key' | jq -sc
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
   sync-label:
     runs-on: ubuntu-latest
+    needs: repos
     strategy:
       fail-fast: false
       max-parallel: 20
       matrix:
-        repo:
-          - testing
-
+        repo: ${{ fromJSON( needs.repos.outputs.matrix ) }}
 
     steps:
       - name: Mask GitHub token
@@ -39,43 +53,3 @@ jobs:
 
             console.log('Labels to update:');
             console.log(labels);
-            
-            const currentLabels = await github.rest.issues.listLabelsForRepo({
-                owner: process.env.OWNER,
-                repo: process.env.REPO
-              });
-            
-            console.log('Current project labels:');
-            console.log(currentLabels.data);
-          
-            for (const label of labels) {
-              const currentLabel = currentLabels.data.find(({name}) => name == label.name);
-
-              console.log('Label:');
-              console.log(label);
-
-              console.log('currentLabel:');
-              console.log(currentLabel);
-            
-              if (!currentLabel) {
-  
-                console.log('Add label: ' + label.name);
-                github.rest.issues.createLabel({
-                  owner: process.env.OWNER,
-                  repo: process.env.REPO,
-                  ...label
-                });
-  
-              } else if (label.color != currentLabel.color || label.description != currentLabel.description) {
-                
-                console.log('Update label: ' + label.name);
-                github.rest.issues.updateLabel({
-                  owner: process.env.OWNER,
-                  repo: process.env.REPO,
-                  ...label
-                });
-            
-              } else {
-                console.log('Label: ' + label.name + ' is up to date');
-              }
-            }
