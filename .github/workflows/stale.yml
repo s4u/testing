@@ -28,6 +28,7 @@ permissions:
 
 jobs:
   waiting-for-feedback:
+    if: github.event_name == 'schedule'
     name: 'Manage issues, PRs with waiting-for-feedback label'
     runs-on: ubuntu-latest
 
