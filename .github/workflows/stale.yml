@@ -26,10 +26,6 @@ permissions:
   issues: write
   pull-requests: write
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.issue.number }}
-  cancel-in-progress: false
-
 jobs:
   env:
     runs-on: ubuntu-latest
@@ -63,6 +59,9 @@ jobs:
     if: github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.issue.labels.*.name, 'waiting-for-feedback')
     name: 'Remove waiting-for-feedback label'
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.issue.number }}
+      cancel-in-progress: false
 
     steps:
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
