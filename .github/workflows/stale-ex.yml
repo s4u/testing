@@ -1,0 +1,9 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: '1/8 * * * *'
+
+jobs:
+  stale:
+    uses: './.github/workflows/stale.yml'
