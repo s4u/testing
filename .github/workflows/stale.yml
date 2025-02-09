@@ -29,6 +29,10 @@ permissions:
 jobs:
   env:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.issue.number }}
+      cancel-in-progress: false
+
     steps:
       - name: Dump GitHub context
         env:
