@@ -36,7 +36,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         shell: bash
 
-  waiting-for-feedback:
+  stale-waiting-for-feedback:
     if: github.event_name == 'schedule'
     name: 'Manage issues, PRs with waiting-for-feedback label'
     runs-on: ubuntu-latest
@@ -55,9 +55,21 @@ jobs:
           exempt-issue-labels: 'priority:blocker,priority:critical'
           exempt-pr-labels: 'priority:blocker,priority:critical'
 
-  remove-label:
-    if: github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.issue.labels.*.name, 'bug')
+  remove-waiting-for-feedback:
+    if: github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.issue.labels.*.name, 'remove-waiting-for-feedback')
+    name: 'Remove waiting-for-feedback label'
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "ok"
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        with:
+          script: |
+            
+            const result = await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                name: 'waiting-for-feedback'
+              });
+            
+              console.log(result);
