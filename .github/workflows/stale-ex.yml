@@ -2,7 +2,7 @@ name: Stale execution
 
 on:
   schedule:
-    - cron: '12 * * * *'
+    - cron: '15 * * * *'
   issue_comment:
     types: [ 'created' ]
 
