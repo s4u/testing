@@ -56,7 +56,7 @@ jobs:
           exempt-pr-labels: 'priority:blocker,priority:critical'
 
   remove-waiting-for-feedback:
-    if: github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.issue.labels.*.name, 'remove-waiting-for-feedback')
+    if: github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.issue.labels.*.name, 'waiting-for-feedback')
     name: 'Remove waiting-for-feedback label'
     runs-on: ubuntu-latest
 
