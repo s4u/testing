@@ -81,6 +81,9 @@ jobs:
               var milestone;
               if (milestones.data.length > 1) {
                 milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
+                if (!milestone) {
+                  milestone = milestones.data.find(({title}) => title === version);
+                }
               } else {
                 milestone = milestones.data[0];
               }
@@ -93,13 +96,20 @@ jobs:
                   title: version,
                   description: 'branch: ' + branch
                 });            
-              } else if (milestone.title !== version) {
-                // update milestone title - version
+              } else if (milestone.title !== version || milestone.description?.includes('branch: ' + branch)) {
+                // update milestone
+                const desc = milestone.description;
+                if (!desc) {
+                  desc =  'branch: ' + branch;
+                } else if ( !desc.includes('branch: ' + branch)) {
+                  desc += '\nbranch: ' + branch';
+                }
                 github.rest.issues.updateMilestone({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   milestone_number: milestone.number,
-                  title: version
+                  title: version,
+                  description: desc   
                 });            
-              }
+              }  
             }
