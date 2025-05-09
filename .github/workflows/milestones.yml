@@ -54,10 +54,9 @@ jobs:
           CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
         with:
           script: |
-            const payload = context.payload;
-            
-            console.log(payload);
-            
+            console.log(JSON.stringify(context))
+
+
 #                        const milestones = await github.rest.issues.listMilestones({
 #                          owner: context.repo.owner,
 #                          repo: context.repo.repo,
