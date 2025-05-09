@@ -55,20 +55,22 @@ jobs:
         with:
           script: |
             console.log(JSON.stringify(context))
+            const branch = ref.replace('refs/heads/', '');
+            
+            const milestones = await github.rest.issues.listMilestones({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
 
+            console.log(milestones);
 
-#                        const milestones = await github.rest.issues.listMilestones({
-#                          owner: context.repo.owner,
-#                          repo: context.repo.repo,
-#                          state: 'open'
-#                        });
-#            console.log(milestones);
-#            if (milestones.data.length == 0) {
-#              // no milestone create one
-#              github.rest.issues.createMilestone({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                title: process.env.DEFAULT_LABEL,
-#                description: 'branch: ' + branch
-#              });
-#            }
+            if (milestones.data.length == 0) {
+              // no milestone create one
+              github.rest.issues.createMilestone({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: process.env.DEFAULT_LABEL,
+                description: 'branch: ' + branch
+              });
+            }
