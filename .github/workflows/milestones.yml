@@ -54,8 +54,11 @@ jobs:
           CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
         with:
           script: |
-            console.log(JSON.stringify(context))
             const branch = context.ref.replace('refs/heads/', '');
+            const version = process.env.CURRENT_VERSION;
+            
+            console.log('branch: ' + branch);
+            console.log('version: ' + branch);
             
             const milestones = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
@@ -70,7 +73,32 @@ jobs:
               github.rest.issues.createMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: process.env.CURRENT_VERSION,
+                title: version,
                 description: 'branch: ' + branch
               });
+            } else {
+              var milestone;
+              if (milestones.data.length > 1) {
+                milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
+              } else {
+                milestone = milestones.data[0];
+              }
+
+              if (!milestone) {
+                // there is no milestone with branch label, so create one
+                github.rest.issues.createMilestone({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: version,
+                  description: 'branch: ' + branch
+                });            
+              } else if (milestone.title !== version) {
+                // update milestone title - version
+                github.rest.issues.updateMilestone({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  milestone_number: milestone.number
+                  title: version,
+                });            
+              }
             }
