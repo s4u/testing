@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+  workflow_dispatch:
+
+jobs:
+  detect-version:
+    name: Detect version
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: 'false'
+
+      - id: has-pom
+        run: |
+          if [ -f pom.xml ]; then
+            echo "status=true" >> $GITHUB_OUTPUT
+          fi
+          cat $GITHUB_OUTPUT
+
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4
+        if: steps.has-pom.outputs.status == 'true'
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+          cache: 'maven'
+
+      - id: version
+        if: steps.has-pom.outputs.status == 'true'
+        run: |
+          mvn --batch-mode --non-recursive help:evaluate -Dexpression=project.version -Doutput=target/version.txt
+          V=$(cat target/version.txt)
+          echo "version=${V%-SNAPSHOT}" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
+
+
+  current-milestone:
+    needs: detect-version
+    uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+    env:
+      CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
+    with:
+      script: |
+        const milestones = await github.rest.issues.listMilestones({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          state: 'open'
+        });
+        
+        console.log(milestones);
+        const branch = context.payload.pull_request.base.ref
+        
+        if (milestones.data.length == 0) {
+          // no milestone create one
+          github.rest.issues.createMilestone({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: process.env.DEFAULT_LABEL,
+            description: 'branch: ' + branch
+          });
+        }
