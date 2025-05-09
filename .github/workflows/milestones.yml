@@ -54,18 +54,16 @@ jobs:
           CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
         with:
           script: |
-#            const milestones = await github.rest.issues.listMilestones({
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              state: 'open'
-#            });
-            
-#            console.log(milestones);
-
             const payload = context.payload;
             
             console.log(payload);
             
+#                        const milestones = await github.rest.issues.listMilestones({
+#                          owner: context.repo.owner,
+#                          repo: context.repo.repo,
+#                          state: 'open'
+#                        });
+#            console.log(milestones);
 #            if (milestones.data.length == 0) {
 #              // no milestone create one
 #              github.rest.issues.createMilestone({
