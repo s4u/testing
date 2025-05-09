@@ -1,4 +1,4 @@
-name: Build
+name: Milestones
 
 on:
   push:
@@ -54,21 +54,24 @@ jobs:
           CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
         with:
           script: |
-            const milestones = await github.rest.issues.listMilestones({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open'
-            });
+#            const milestones = await github.rest.issues.listMilestones({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              state: 'open'
+#            });
             
-            console.log(milestones);
-            const branch = context.payload.pull_request.base.ref
+#            console.log(milestones);
+
+            const payload = context.payload;
             
-            if (milestones.data.length == 0) {
-              // no milestone create one
-              github.rest.issues.createMilestone({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: process.env.DEFAULT_LABEL,
-                description: 'branch: ' + branch
-              });
-            }
+            console.log(payload);
+            
+#            if (milestones.data.length == 0) {
+#              // no milestone create one
+#              github.rest.issues.createMilestone({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                title: process.env.DEFAULT_LABEL,
+#                description: 'branch: ' + branch
+#              });
+#            }
