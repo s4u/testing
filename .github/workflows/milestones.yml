@@ -98,11 +98,11 @@ jobs:
                 });            
               } else if (milestone.title !== version || milestone.description?.includes('branch: ' + branch)) {
                 // update milestone
-                const desc = milestone.description;
+                var desc = milestone.description;
                 if (!desc) {
                   desc =  'branch: ' + branch;
-                } else if ( !desc.includes('branch: ' + branch)) {
-                  desc += '\nbranch: ' + branch';
+                } else if (!desc.includes('branch: ' + branch)) {
+                  desc += '\nbranch: ' + branch;
                 }
                 github.rest.issues.updateMilestone({
                   owner: context.repo.owner,
