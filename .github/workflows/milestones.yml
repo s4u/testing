@@ -88,6 +88,9 @@ jobs:
                 milestone = milestones.data[0];
               }
 
+              console.log('Current milestone: ');
+              console.log(milestone);
+            
               if (!milestone) {
                 // there is no milestone with branch label, so create one
                 github.rest.issues.createMilestone({
@@ -96,7 +99,7 @@ jobs:
                   title: version,
                   description: 'branch: ' + branch
                 });            
-              } else if (milestone.title !== version || milestone.description?.includes('branch: ' + branch)) {
+              } else if (milestone.title !== version || !milestone.description?.includes('branch: ' + branch)) {
                 // update milestone
                 var desc = milestone.description;
                 if (!desc) {
@@ -111,5 +114,7 @@ jobs:
                   title: version,
                   description: desc   
                 });            
-              }  
+              } else {
+                console.log('milestone up to date');
+              }
             }
