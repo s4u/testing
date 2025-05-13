@@ -11,7 +11,7 @@ jobs:
   dump-github-context:
     name: Dump GitHub Context
     runs-on: ubuntu-latest
-    if: env.RUNNER_DEBUG == '1'
+    if: runner.debug == '1'
 
     steps:
       - run: echo "ok"
