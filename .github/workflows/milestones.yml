@@ -8,6 +8,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  dump-github-context:
+    name: Dump GitHub Context
+    runs-on: ubuntu-latest
+    if: env.RUNNER_DEBUG == '1'
+
+    steps:
+      - run: echo "ok"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        shell: bash
+
   detect-version:
     name: Detect version
     runs-on: ubuntu-latest
@@ -46,11 +57,11 @@ jobs:
 
   current-milestone:
     needs: detect-version
+    if: needs.detect-version.outputs.version != ''
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
-        if: needs.detect-version.outputs.version != ''
         env:
           CURRENT_VERSION: ${{ needs.detect-version.outputs.version }}
         with:
@@ -107,6 +118,7 @@ jobs:
                 } else if (!desc.includes('branch: ' + branch)) {
                   desc += '\nbranch: ' + branch;
                 }
+            
                 github.rest.issues.updateMilestone({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
