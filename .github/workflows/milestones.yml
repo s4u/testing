@@ -15,7 +15,6 @@ jobs:
 
     steps:
       - run: echo "ok"
-        if: runner.debug == '1'
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: bash
