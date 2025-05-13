@@ -11,10 +11,11 @@ jobs:
   dump-github-context:
     name: Dump GitHub Context
     runs-on: ubuntu-latest
-    if: runner.debug == '1'
+    if: github.run_attempt > 1
 
     steps:
       - run: echo "ok"
+        if: runner.debug == '1'
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: bash
