@@ -11,37 +11,3 @@ jobs:
     name: Verify
     uses: s4u/.github/.github/workflows/maven-pr.yml@master
 
-  # check PR labels - if is empty list add comments and break the build
-  labels:
-    permissions:
-      issues: write
-      pull-requests: write
-
-    if: >
-      github.event.action == 'closed' &&
-      github.event.pull_request.merged &&
-      toJSON(github.event.pull_request.labels) == '[]'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Comment PR
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
-        with:
-          script: |
-
-            const issue = await github.rest.issues.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-            
-            console.log(issue);
-            
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: '@' + context.payload.pull_request.merged_by.login +
-              ' Please assign appropriate label to PR according to the type of change.'
-            });
-
-            throw new Error('PRs must be labeled');
