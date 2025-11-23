@@ -53,13 +53,14 @@ jobs:
 
 
 
-  current-milestone:
+  manage-milestone:
+    name: Manage Milestone
     needs: detect-version
     if: needs.detect-version.outputs.version != ''
     runs-on: ubuntu-latest
     permissions:
       # write permission is required to manage milestones
-      contents: write
+      issues: write
 
     steps:
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
