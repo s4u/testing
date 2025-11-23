@@ -75,7 +75,7 @@ jobs:
             });
             
             console.log('All open milestones: ');
-            console.log(milestones);
+            console.log(milestones.data);
             
             var milestone;
             if (milestones.data.length > 1) {
@@ -88,9 +88,10 @@ jobs:
             console.log(milestone);
             
             core.summary.addHeading('Milestone management');
+            
             // in first step just create new milestone - closing the old one will be in the next step
             // if something fails here - we don't want to close the existing milestone
-            const result = await github.rest.issues.createMilestone({
+            const resultNew = await github.rest.issues.createMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: version,
@@ -98,18 +99,24 @@ jobs:
             });
             
             console.log('Create new milestone: ');
-            console.log(result);
+            console.log(resultNew.data);
             
             core.summary.addRaw('New milestone: ');
-              
+            core.summary.addLink(resultNew.data.title, resultNew.data.html_url);
+            core.summary.addBreak();
+            
+            // now close the existing milestone
             if (milestone) {
-              const result = await github.rest.issues.updateMilestone({
+              const resultOld = await github.rest.issues.updateMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 milestone_number: milestone.number,
                 state: 'closed'
               });
-              console.log(result);
+            
+              console.log('Close old milestone: ');
+              console.log(resultOld.data);
+            
               core.summary.addRaw('Closed milestone: ');
               core.summary.addLink(milestone.title, milestone.html_url);
               core.summary.addBreak();
