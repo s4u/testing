@@ -78,55 +78,42 @@ jobs:
               state: 'open'
             });
 
+            console.log('All open milestones: ');
             console.log(milestones);
 
-            if (milestones.data.length == 0) {
-              // no milestone create one
-              github.rest.issues.createMilestone({
+            var milestone;
+            if (milestones.data.length > 1) {
+              milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
+            } else {
+              milestone = milestones.data[0];
+            }
+
+            console.log('Current milestone: ');
+            console.log(milestone);
+
+            core.summary.addHeading('Milestone management');
+            
+            if (milestone) {
+              github.rest.issues.updateMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: version,
-                description: 'branch: ' + branch
+                milestone_number: milestone.number,
+                state: 'closed'
               });
-            } else {
-              var milestone;
-              if (milestones.data.length > 1) {
-                milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
-                if (!milestone) {
-                  milestone = milestones.data.find(({title}) => title === version);
-                }
-              } else {
-                milestone = milestones.data[0];
-              }
-
-              console.log('Current milestone: ');
-              console.log(milestone);
-            
-              if (!milestone) {
-                // there is no milestone with branch label, so create one
-                github.rest.issues.createMilestone({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  title: version,
-                  description: 'branch: ' + branch
-                });            
-              } else if (milestone.title !== version || !milestone.description?.includes('branch: ' + branch)) {
-                // update milestone
-                var desc = milestone.description;
-                if (!desc) {
-                  desc =  'branch: ' + branch;
-                } else if (!desc.includes('branch: ' + branch)) {
-                  desc += '\nbranch: ' + branch;
-                }
-            
-                github.rest.issues.updateMilestone({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  milestone_number: milestone.number,
-                  title: version,
-                  description: desc   
-                });            
-              } else {
-                console.log('milestone up to date');
-              }
+              core.summary.addRaw(`Close milestone: ');
+              core.summary.addLink(${milestone.title}, ${milestone.html_url});
+              core.summary.addBreak();
             }
+
+            // 
+            const result = await github.rest.issues.createMilestone({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: version,
+              description: 'branch: ' + branch
+            });            
+
+            console.log('Create new milestone: ');
+            console.log(result);
+            
+            core.summary.addRaw(`Close milestone: ');
