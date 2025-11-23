@@ -98,7 +98,7 @@ jobs:
                 description: 'branch: ' + branch
             });
             
-            console.log('Create new milestone: ');
+            console.log('Created new milestone: ');
             console.log(resultNew.data);
             
             core.summary.addRaw('New milestone: ');
@@ -114,11 +114,15 @@ jobs:
                 state: 'closed'
               });
             
-              console.log('Close old milestone: ');
+              console.log('Closed old milestone: ');
               console.log(resultOld.data);
             
               core.summary.addRaw('Closed milestone: ');
               core.summary.addLink(milestone.title, milestone.html_url);
+              core.summary.addBreak();
+            } else {
+              console.log('No existing milestone to close');
+              core.summary.addRaw('No existing milestone to close - plese verify');
               core.summary.addBreak();
             }
             
