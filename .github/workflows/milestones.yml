@@ -1,10 +1,6 @@
 name: Milestones
 
 on:
-  push:
-    branches:
-      - 'master'
-      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -92,19 +88,8 @@ jobs:
             console.log(milestone);
             
             core.summary.addHeading('Milestone management');
-              
-            if (milestone) {
-              await github.rest.issues.updateMilestone({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                milestone_number: milestone.number,
-                state: 'closed'
-              });
-              core.summary.addRaw('Closed milestone: ');
-              core.summary.addLink(milestone.title, milestone.html_url);
-              core.summary.addBreak();
-            }
-            
+            // in first step just create new milestone - closing the old one will be in the next step
+            // if something fails here - we don't want to close the existing milestone
             const result = await github.rest.issues.createMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -116,4 +101,18 @@ jobs:
             console.log(result);
             
             core.summary.addRaw('New milestone: ');
+              
+            if (milestone) {
+              const result = await github.rest.issues.updateMilestone({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                milestone_number: milestone.number,
+                state: 'closed'
+              });
+              console.log(result);
+              core.summary.addRaw('Closed milestone: ');
+              core.summary.addLink(milestone.title, milestone.html_url);
+              core.summary.addBreak();
+            }
+            
             core.summary.write();
