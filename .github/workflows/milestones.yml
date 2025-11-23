@@ -94,7 +94,7 @@ jobs:
             core.summary.addHeading('Milestone management');
               
             if (milestone) {
-              github.rest.issues.updateMilestone({
+              await github.rest.issues.updateMilestone({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 milestone_number: milestone.number,
@@ -116,3 +116,4 @@ jobs:
             console.log(result);
             
             core.summary.addRaw('New milestone: ');
+            core.summary.write();
