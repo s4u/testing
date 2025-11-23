@@ -70,29 +70,29 @@ jobs:
             const version = process.env.CURRENT_VERSION;
             
             console.log('branch: ' + branch);
-            console.log('version: ' + branch);
+            console.log('version: ' + version);
             
             const milestones = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open'
             });
-
+            
             console.log('All open milestones: ');
             console.log(milestones);
-
+            
             var milestone;
             if (milestones.data.length > 1) {
               milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
             } else {
               milestone = milestones.data[0];
             }
-
+            
             console.log('Current milestone: ');
             console.log(milestone);
-
-            core.summary.addHeading('Milestone management');
             
+            core.summary.addHeading('Milestone management');
+              
             if (milestone) {
               github.rest.issues.updateMilestone({
                 owner: context.repo.owner,
@@ -100,20 +100,19 @@ jobs:
                 milestone_number: milestone.number,
                 state: 'closed'
               });
-              core.summary.addRaw(`Close milestone: ');
-              core.summary.addLink(${milestone.title}, ${milestone.html_url});
+              core.summary.addRaw('Closed milestone: ');
+              core.summary.addLink(milestone.title, milestone.html_url);
               core.summary.addBreak();
             }
-
-            // 
+            
             const result = await github.rest.issues.createMilestone({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: version,
-              description: 'branch: ' + branch
-            });            
-
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: version,
+                description: 'branch: ' + branch
+            });
+            
             console.log('Create new milestone: ');
             console.log(result);
             
-            core.summary.addRaw(`Close milestone: ');
+            core.summary.addRaw('New milestone: ');
