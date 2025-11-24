@@ -86,7 +86,7 @@ jobs:
             var milestone;
             if (milestones.data.length > 1) {
               milestone = milestones.data.find(({description}) => description?.includes('branch: ' + branch));
-            } else {
+            } else if(milestones.data.length == 1) {
               milestone = milestones.data[0];
             }
             
