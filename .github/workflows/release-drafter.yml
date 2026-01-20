@@ -10,6 +10,11 @@ on:
 jobs:
   update_release_draft:
     name: Update Release Draft
-    uses: slawekjaranowski/release-drafter@commits-since
-    with:
-      initial-commits-since: '2026-01-15T00:00:00Z'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: slawekjaranowski/release-drafter@commits-since
+        with:
+          initial-commits-since: '2026-01-15T00:00:00Z'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
