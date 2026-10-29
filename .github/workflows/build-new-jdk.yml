@@ -22,12 +22,7 @@ jobs:
       java-matrix:  '["21"]'
       java-dist-matrix: '["zulu", "temurin", "liberica", "microsoft", "corretto", "semeru"]'
 
-    secrets:
-      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
-      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
-      OSS_USER:       ${{ secrets.OSS_USER }}
-      OSS_PASS:       ${{ secrets.OSS_PASS }}
-      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+    secrets: inherit
 
   build-22:
     needs: [ build-21 ]
@@ -37,12 +32,7 @@ jobs:
       java-matrix:  '["22-ea"]'
       java-dist-matrix: '["zulu", "temurin", "liberica", "microsoft", "corretto", "semeru"]'
 
-    secrets:
-      SIGN_KEY:       ${{ secrets.SIGN_KEY }}
-      SIGN_KEY_PASS:  ${{ secrets.SIGN_KEY_PASS }}
-      OSS_USER:       ${{ secrets.OSS_USER }}
-      OSS_PASS:       ${{ secrets.OSS_PASS }}
-      TECH_TOKEN:     ${{ secrets.TECH_TOKEN }}
+    secrets: inherit
 
   verify-ok:
     name: OK
@@ -52,7 +42,7 @@ jobs:
 
     steps:
       - run: 'true'
-        if: needs.build.result == 'success'
+        if: needs.build-21.result == 'success' && needs.build-22.result == 'success'
 
       - run: 'false'
-        if: needs.build.result != 'success'
+        if: needs.build-21.result != 'success' || needs.build-22.result != 'success'
